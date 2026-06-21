@@ -968,14 +968,15 @@
             }, 500);
         }
 
-        // Increment every 8-15 seconds randomly
-        function scheduleNextIncrement() {
-            const delay = Math.floor(Math.random() * 7000) + 8000; // 8-15 seconds
-            setTimeout(() => {
-                incrementUserCount();
-                scheduleNextIncrement();
-            }, delay);
-        }
+// Increment every 30-90 seconds randomly
+function scheduleNextIncrement() {
+    const delay = Math.floor(Math.random() * 60000) + 30000; // 30-90 seconds
+
+    setTimeout(() => {
+        incrementUserCount();
+        scheduleNextIncrement();
+    }, delay);
+}
 
         // Start the counter after page loads
         window.addEventListener('load', () => {
