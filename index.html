@@ -7,11 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --green: #00ff41;
-            --green-dark: #00cc33;
+            --green: #10b981;
+            --green-dark: #059669;
+            --green-light: #34d399;
             --dark: #0a0a0a;
             --gray: #121212;
-            --border: rgba(0, 255, 65, 0.2);
+            --border: rgba(16, 185, 129, 0.2);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -31,8 +32,8 @@
             position: fixed;
             inset: 0;
             background-image: 
-                linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
             z-index: -1;
             animation: gridMove 20s linear infinite;
@@ -109,7 +110,7 @@
 
         nav.scrolled {
             background: rgba(10, 10, 10, 0.98);
-            box-shadow: 0 10px 40px rgba(0, 255, 65, 0.1);
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.1);
         }
 
         .nav-container {
@@ -171,18 +172,18 @@
 
         .nav-cta {
             background: linear-gradient(135deg, var(--green), var(--green-dark));
-            color: black;
+            color: white;
             padding: 12px 28px;
             border-radius: 50px;
             font-weight: 600;
             text-decoration: none;
             transition: all 0.3s;
-            box-shadow: 0 5px 20px rgba(0, 255, 65, 0.3);
+            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.3);
         }
 
         .nav-cta:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.5);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.5);
         }
 
         /* Burger Menu */
@@ -220,7 +221,7 @@
 
         .hero img {
             width: 260px;
-            filter: drop-shadow(0 0 80px rgba(0, 255, 65, 0.8));
+            filter: drop-shadow(0 0 80px rgba(16, 185, 129, 0.8));
             animation: floatLogo 4s ease-in-out infinite;
             margin-bottom: 20px;
         }
@@ -243,8 +244,8 @@
         }
 
         @keyframes titleGlow {
-            0%, 100% { filter: drop-shadow(0 0 20px rgba(0, 255, 65, 0.5)); }
-            50% { filter: drop-shadow(0 0 40px rgba(0, 255, 65, 0.8)); }
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.5)); }
+            50% { filter: drop-shadow(0 0 40px rgba(16, 185, 129, 0.8)); }
         }
 
         .hero .tagline {
@@ -266,7 +267,7 @@
 
         .btn-primary {
             background: linear-gradient(135deg, var(--green), var(--green-dark));
-            color: black;
+            color: white;
             padding: 22px 55px;
             font-size: 1.35rem;
             font-weight: 700;
@@ -277,7 +278,7 @@
             align-items: center;
             gap: 15px;
             transition: all 0.4s;
-            box-shadow: 0 15px 50px rgba(0, 255, 65, 0.5);
+            box-shadow: 0 15px 50px rgba(16, 185, 129, 0.5);
             text-decoration: none;
             position: relative;
             overflow: hidden;
@@ -298,13 +299,13 @@
 
         .btn-primary:hover {
             transform: translateY(-5px) scale(1.03);
-            box-shadow: 0 25px 70px rgba(0, 255, 65, 0.7);
+            box-shadow: 0 25px 70px rgba(16, 185, 129, 0.7);
         }
 
         .btn-primary svg {
             width: 26px;
             height: 26px;
-            fill: black;
+            fill: white;
         }
 
         .hero .trust-badge {
@@ -324,7 +325,7 @@
 
         /* Stats Bar */
         .stats-bar {
-            background: rgba(0, 255, 65, 0.05);
+            background: rgba(16, 185, 129, 0.05);
             padding: 35px 5%;
             border-top: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
@@ -334,7 +335,7 @@
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 40px;
             text-align: center;
         }
@@ -403,14 +404,14 @@
 
         .tab:hover {
             border-color: var(--green);
-            background: rgba(0, 255, 65, 0.05);
+            background: rgba(16, 185, 129, 0.05);
         }
 
         .tab.active {
             background: var(--green);
-            color: black;
+            color: white;
             border-color: var(--green);
-            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.4);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
         }
 
         /* Features Grid */
@@ -424,7 +425,7 @@
 
         .feature-card {
             background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(0, 255, 65, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.2);
             border-radius: 25px;
             padding: 45px 35px;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -437,7 +438,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(0, 255, 65, 0.1), transparent);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), transparent);
             opacity: 0;
             transition: opacity 0.5s;
         }
@@ -449,15 +450,15 @@
         .feature-card:hover {
             transform: translateY(-20px) scale(1.02);
             border-color: var(--green);
-            box-shadow: 0 30px 60px rgba(0, 255, 65, 0.3);
-            background: rgba(0, 255, 65, 0.05);
+            box-shadow: 0 30px 60px rgba(16, 185, 129, 0.3);
+            background: rgba(16, 185, 129, 0.05);
         }
 
         .feature-icon {
             font-size: 3.5rem;
             margin-bottom: 25px;
             display: block;
-            filter: drop-shadow(0 0 10px rgba(0, 255, 65, 0.5));
+            filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.5));
         }
 
         .feature-card h3 {
@@ -490,8 +491,8 @@
         .step {
             text-align: center;
             padding: 40px 25px;
-            background: rgba(0, 255, 65, 0.03);
-            border: 1px solid rgba(0, 255, 65, 0.15);
+            background: rgba(16, 185, 129, 0.03);
+            border: 1px solid rgba(16, 185, 129, 0.15);
             border-radius: 20px;
             transition: all 0.3s;
         }
@@ -565,8 +566,25 @@
             line-height: 1.7;
         }
 
+        .faq-answer ol, .faq-answer ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .faq-answer li {
+            margin: 10px 0;
+        }
+
+        .faq-answer code {
+            background: rgba(16, 185, 129, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: var(--green);
+            font-family: 'Courier New', monospace;
+        }
+
         .faq-item.active .faq-answer {
-            max-height: 500px;
+            max-height: 1000px;
             padding: 0 30px 25px;
         }
 
@@ -596,7 +614,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at center, rgba(0, 255, 65, 0.1), transparent 70%);
+            background: radial-gradient(circle at center, rgba(16, 185, 129, 0.1), transparent 70%);
         }
 
         .cta-content {
@@ -622,7 +640,7 @@
             background: #050505;
             padding: 60px 5% 30px;
             text-align: center;
-            border-top: 1px solid rgba(0, 255, 65, 0.1);
+            border-top: 1px solid rgba(16, 185, 129, 0.1);
         }
 
         .footer-info {
@@ -724,10 +742,6 @@
                 <span class="stat-label">Breaches Reported</span>
             </div>
             <div class="stat-item">
-                <span class="stat-number">99.97%</span>
-                <span class="stat-label">Detection Rate</span>
-            </div>
-            <div class="stat-item">
                 <span class="stat-number">24/7</span>
                 <span class="stat-label">Real-Time Monitoring</span>
             </div>
@@ -780,11 +794,30 @@
         <div class="faq-container">
             <div class="faq-item" onclick="toggleFAQ(this)">
                 <div class="faq-question">
+                    How do I find my .ROBLOSECURITY cookie?
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <strong>For Chrome/Edge:</strong>
+                    <ol>
+                        <li>Go to <code>roblox.com</code> and make sure you're logged in</li>
+                        <li>Press <code>F12</code> to open Developer Tools</li>
+                        <li>Click the <strong>Application</strong> tab (or Storage in Firefox)</li>
+                        <li>Expand <strong>Cookies</strong> → <code>https://www.roblox.com</code></li>
+                        <li>Find the cookie named <code>.ROBLOSECURITY</code></li>
+                        <li>Copy the full value (starts with <code>_|WARNING:-DO-NOT-SHARE-THIS...</code>)</li>
+                    </ol>
+                    <strong>⚠️ NEVER share this cookie with anyone! It gives full access to your account.</strong>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
                     Is CookieDefender safe to use?
                     <span class="faq-icon">▼</span>
                 </div>
                 <div class="faq-answer">
-                    Yes! CookieDefender is completely safe and uses zero-knowledge architecture. We never store or transmit your cookies. All protection happens locally on your machine.
+                    Yes! CookieDefender is completely safe and uses zero-knowledge architecture. We never store or transmit your cookies. All protection happens locally on your machine. Your .ROBLOSECURITY token never leaves your device.
                 </div>
             </div>
 
@@ -794,17 +827,17 @@
                     <span class="faq-icon">▼</span>
                 </div>
                 <div class="faq-answer">
-                    Absolutely! CookieDefender is optimized for both Windows 10 (64-bit) and Windows 11. It's a portable executable with no installation needed.
+                    Absolutely! CookieDefender is optimized for both Windows 10 (64-bit) and Windows 11. It's a portable executable with no installation needed. Simply download and run.
                 </div>
             </div>
 
             <div class="faq-item" onclick="toggleFAQ(this)">
                 <div class="faq-question">
-                    Will Roblox detect this as a cheat?
+                    Will Roblox ban me for using this?
                     <span class="faq-icon">▼</span>
                 </div>
                 <div class="faq-answer">
-                    No. CookieDefender is purely a defensive security tool. It doesn't modify game files, inject code, or interact with Roblox's anti-cheat systems.
+                    No. CookieDefender is purely a defensive security tool. It doesn't modify game files, inject code, or interact with Roblox's anti-cheat systems. It only protects your authentication cookies from being stolen.
                 </div>
             </div>
 
@@ -814,7 +847,24 @@
                     <span class="faq-icon">▼</span>
                 </div>
                 <div class="faq-answer">
-                    CookieDefender uses HMAC-SHA256 cryptographic binding to tie your cookies to your unique hardware fingerprint. Even if a logger steals your cookie, it cannot be used on another machine.
+                    CookieDefender uses HMAC-SHA256 cryptographic binding to tie your cookies to your unique hardware fingerprint. Even if a logger steals your cookie, it cannot be used on another machine because the hardware signature won't match.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    What should I do if my cookie gets stolen?
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    If you suspect your cookie has been compromised:
+                    <ol>
+                        <li>Immediately log out of all Roblox sessions</li>
+                        <li>Change your password at <code>roblox.com/settings</code></li>
+                        <li>Enable 2-Step Verification in Security settings</li>
+                        <li>Run CookieDefender to secure your new session</li>
+                        <li>Check account activity for unauthorized purchases or changes</li>
+                    </ol>
                 </div>
             </div>
 
@@ -824,7 +874,7 @@
                     <span class="faq-icon">▼</span>
                 </div>
                 <div class="faq-answer">
-                    Yes! CookieDefender is 100% free and open-source. No hidden fees, no premium versions, no subscriptions.
+                    Yes! CookieDefender is 100% free and open-source. No hidden fees, no premium versions, no subscriptions. We believe account security should be accessible to everyone.
                 </div>
             </div>
         </div>
