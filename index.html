@@ -354,6 +354,16 @@
             color: var(--green);
             display: block;
             margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-number.increment {
+            animation: statPulse 0.5s ease;
+        }
+
+        @keyframes statPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); color: var(--green-light); }
         }
 
         .stat-label {
@@ -725,7 +735,7 @@
                 Download CookieDefender
             </a>
             <div class="trust-badge">
-                <span>v2.1.3</span> • Trusted by <span>68,942</span> users • <span>100%</span> Safe
+                <span>v2.1.3</span> • Trusted by <span id="userCount">68,942</span> users • <span>100%</span> Safe
             </div>
         </div>
     </section>
@@ -734,7 +744,7 @@
     <div class="stats-bar">
         <div class="stats-container">
             <div class="stat-item">
-                <span class="stat-number">68,942</span>
+                <span class="stat-number" id="protectedAccounts">68,942</span>
                 <span class="stat-label">Protected Accounts</span>
             </div>
             <div class="stat-item">
@@ -885,7 +895,7 @@
         <div class="cta-content">
             <h2>Ready to Secure Your Account?</h2>
             <p>
-                Join 68,942 protected users and experience enterprise-grade security for your Roblox account.
+                Join <span id="ctaUserCount" style="color: var(--green); font-weight: 700;">68,942</span> protected users and experience enterprise-grade security for your Roblox account.
             </p>
             <a href="https://raw.githubusercontent.com/Quincyzx/CookieDefender/main/CookieDefender.exe" class="btn-primary" style="font-size: 1.5rem; padding: 24px 65px;" download>
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
@@ -927,6 +937,50 @@
                 { icon: "📊", title: "Behavioral Analytics Engine", desc: "Machine learning algorithms detect anomalous account activity and trigger instant security protocols." }
             ]
         ];
+
+        // Live User Counter
+        let userCount = 68942;
+
+        function incrementUserCount() {
+            // Random increment between 1-3 users
+            const increment = Math.floor(Math.random() * 3) + 1;
+            userCount += increment;
+            
+            // Format with comma separator
+            const formattedCount = userCount.toLocaleString();
+            
+            // Update all instances
+            const protectedAccountsEl = document.getElementById('protectedAccounts');
+            const userCountEl = document.getElementById('userCount');
+            const ctaUserCountEl = document.getElementById('ctaUserCount');
+            
+            // Add animation class
+            protectedAccountsEl.classList.add('increment');
+            
+            // Update text
+            protectedAccountsEl.textContent = formattedCount;
+            userCountEl.textContent = formattedCount;
+            ctaUserCountEl.textContent = formattedCount;
+            
+            // Remove animation class after it completes
+            setTimeout(() => {
+                protectedAccountsEl.classList.remove('increment');
+            }, 500);
+        }
+
+        // Increment every 8-15 seconds randomly
+        function scheduleNextIncrement() {
+            const delay = Math.floor(Math.random() * 7000) + 8000; // 8-15 seconds
+            setTimeout(() => {
+                incrementUserCount();
+                scheduleNextIncrement();
+            }, delay);
+        }
+
+        // Start the counter after page loads
+        window.addEventListener('load', () => {
+            scheduleNextIncrement();
+        });
 
         // Initialize first tab
         function switchTab(index, element) {
