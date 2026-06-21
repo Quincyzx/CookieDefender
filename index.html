@@ -938,45 +938,54 @@
             ]
         ];
 
-        // Live User Counter
-        let userCount = 68942;
+    // ===== Persistent Live User Counter =====
 
-        function incrementUserCount() {
-            // Random increment between 1-3 users
-            const increment = Math.floor(Math.random() * 3) + 1;
-            userCount += increment;
-            
-            // Format with comma separator
-            const formattedCount = userCount.toLocaleString();
-            
-            // Update all instances
-            const protectedAccountsEl = document.getElementById('protectedAccounts');
-            const userCountEl = document.getElementById('userCount');
-            const ctaUserCountEl = document.getElementById('ctaUserCount');
-            
-            // Add animation class
-            protectedAccountsEl.classList.add('increment');
-            
-            // Update text
-            protectedAccountsEl.textContent = formattedCount;
-            userCountEl.textContent = formattedCount;
-            ctaUserCountEl.textContent = formattedCount;
-            
-            // Remove animation class after it completes
-            setTimeout(() => {
-                protectedAccountsEl.classList.remove('increment');
-            }, 500);
-        }
+    const BASE_COUNT = 68942;
 
-// Increment every 30-90 seconds randomly
-function scheduleNextIncrement() {
-    const delay = Math.floor(Math.random() * 60000) + 30000; // 30-90 seconds
+    // Get saved count from localStorage or use base value
+    let userCount = parseInt(localStorage.getItem("cookieDefenderUserCount")) || BASE_COUNT;
 
-    setTimeout(() => {
-        incrementUserCount();
+    const protectedAccountsEl = document.getElementById('protectedAccounts');
+    const userCountEl = document.getElementById('userCount');
+    const ctaUserCountEl = document.getElementById('ctaUserCount');
+
+    function updateDisplay() {
+        const formatted = userCount.toLocaleString();
+
+        protectedAccountsEl.textContent = formatted;
+        userCountEl.textContent = formatted;
+        ctaUserCountEl.textContent = formatted;
+    }
+
+    function incrementUserCount() {
+        const increment = Math.floor(Math.random() * 3) + 1; // +1 to +3
+        userCount += increment;
+
+        // Save updated value so it persists
+        localStorage.setItem("cookieDefenderUserCount", userCount);
+
+        // Add animation
+        protectedAccountsEl.classList.add("increment");
+
+        updateDisplay();
+
+        setTimeout(() => {
+            protectedAccountsEl.classList.remove("increment");
+        }, 500);
+    }
+
+    function scheduleNextIncrement() {
+        const delay = Math.floor(Math.random() * 7000) + 8000; // 8–15 sec
+        setTimeout(() => {
+            incrementUserCount();
+            scheduleNextIncrement();
+        }, delay);
+    }
+
+    window.addEventListener("load", () => {
+        updateDisplay();
         scheduleNextIncrement();
-    }, delay);
-}
+    });
 
         // Start the counter after page loads
         window.addEventListener('load', () => {
